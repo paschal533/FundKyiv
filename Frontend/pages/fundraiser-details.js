@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useRef } from "react";
 
-//import { FundraiserContext } from "../context/FundraiserContext";
+import { FundraiserContext } from "../context/FundraiserContext";
 import { shortenAddress } from "../utils/shortenAddress";
 import { Button, Loader, Modal } from "../components";
 import images from "../assets";
