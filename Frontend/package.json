@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.2.4",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "axios": "^0.27.2",
+    "cryptocompare": "^1.0.0",
+    "ethers": "^5.6.9",
+    "framer-motion": "^6.5.1",
+    "ipfs-http-client": "^57.0.3",
+    "next": "latest",
+    "next-themes": "^0.2.0",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-dropzone": "^14.2.2",
+    "web3modal": "^1.9.8"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.35",
+    "@types/react": "18.0.9",
+    "@types/react-dom": "18.0.5",
+    "autoprefixer": "^10.4.7",
+    "eslint": "^8.20.0",
+    "eslint-config-next": "12.2.3",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.2",
+    "typescript": "4.7.2"
+  }
+}
