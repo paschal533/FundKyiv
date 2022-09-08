@@ -14,9 +14,7 @@
   "ast": {
     "absolutePath": "/C/Users/PASCHAL/Downloads/FundCFX-main/FundCFX-main/smart-contract/contracts/Context.sol",
     "exportedSymbols": {
-      "Context": [
-        21
-      ]
+      "Context": [21]
     },
     "id": 22,
     "license": "MIT",
@@ -24,12 +22,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "86:23:0"
       },
@@ -46,9 +39,7 @@
         },
         "fullyImplemented": true,
         "id": 21,
-        "linearizedBaseContracts": [
-          21
-        ],
+        "linearizedBaseContracts": [21],
         "name": "Context",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -245,9 +236,7 @@
   "legacyAST": {
     "absolutePath": "/C/Users/PASCHAL/Downloads/FundCFX-main/FundCFX-main/smart-contract/contracts/Context.sol",
     "exportedSymbols": {
-      "Context": [
-        21
-      ]
+      "Context": [21]
     },
     "id": 22,
     "license": "MIT",
@@ -255,12 +244,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "86:23:0"
       },
@@ -277,9 +261,7 @@
         },
         "fullyImplemented": true,
         "id": 21,
-        "linearizedBaseContracts": [
-          21
-        ],
+        "linearizedBaseContracts": [21],
         "name": "Context",
         "nodeType": "ContractDefinition",
         "nodes": [

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useRef } from "react";
+import Head from "next/head";
 
 import { FundraiserContext } from "../context/FundraiserContext";
 import { shortenAddress } from "../utils/shortenAddress";
@@ -17,7 +18,6 @@ const AssetDetails = () => {
     setSending,
     setLoadDonations,
     loadDonations,
-    setIsOwner,
     withdrawalFunds,
     GetFundRaiserDetails,
     setSuccessModal,
@@ -44,55 +44,12 @@ const AssetDetails = () => {
   const { theme } = useTheme();
   const router = useRouter();
 
-  
   // check if it is cliked outside of modalRef
   const handleClickOutside = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       setPaymentModal(false);
     }
   };
-
-  const PaymentBodyCmp = ({ fundraiser, fundraiserCurrency }) => (
-    <div className="flex flex-col text-center justify-center">
-      <p className="font-poppins text-center dark:text-white text-nft-black-1 text-bold minlg:text-xl font-normal">
-        {fundraiser?.name}
-      </p>
-
-      <div className="my-5 flex w-full justify-center items-center">
-        <div className="relative w-28 h-28 rounded-md">
-          <Image src={fundraiser.imageURL} alt="fundraiser-imageUrl" layout="fill" objectFit="cover" />
-        </div>
-      </div>
-
-      <div>
-         
-        <div className="dark:bg-nft-black-1 bg-white border dark:border-nft-black-1 border-nft-gray-2 rounded-lg w-full outline-none font-poppins dark:text-white text-nft-gray-2 text-base mt-4 px-4 py-3 flexBetween flex-row">
-          <input
-            title="Donation amount"
-            type="number"
-            value={donationValue}
-            onChange={(e) => setDonationValue(e.target.value)}
-            placeholder="Donation amount in USD"
-            className="flex-1 w-full dark:bg-nft-black-1 bg-white outline-none "
-          />
-
-          <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl">
-            CELO
-          </p>
-        </div>
-      </div>
-
-      <div className="flexBetween mt-10">
-        <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">
-          Total CELO:
-        </p>
-        <p className="font-poppins dark:text-white text-nft-black-1 text-base minlg:text-xl font-normal">
-          {CELOAmount}{" "}
-          <span className="font-semibold">{fundraiserCurrency}</span>
-        </p>
-      </div>
-    </div>
-  );
 
   useEffect(() => {
     // disable body scroll when navbar is open
@@ -131,6 +88,7 @@ const AssetDetails = () => {
 
   return (
     <div className="relative flex justify-center md:flex-col min-h-screen">
+      <Head>Fundraiser Details</Head>
       <div className="relative flex-1 flexCenter sm:px-4 p-12 border-r md:border-r-0 md:border-b dark:border-nft-black-1 border-nft-gray-1">
         <div className="relative w-557 minmd:w-2/3 minmd:h-2/3 sm:w-full sm:h-300 h-557 ">
           <Image
@@ -180,7 +138,11 @@ const AssetDetails = () => {
               {fundraiser.description}
             </p>
 
-            <a href={fundraiser.website} target="_blank" className="font-poppins bg-[] dark:text-white text-nft-black-1 font-normal text-base">
+            <a
+              href={fundraiser.website}
+              target="_blank"
+              className="font-poppins bg-[] dark:text-white text-nft-black-1 font-normal text-base"
+            >
               <Button
                 btnName="Learn more..."
                 btnType="outline"
@@ -224,7 +186,10 @@ const AssetDetails = () => {
                 {myDonations?.length > 0 ? (
                   myDonations.map((donation, index) => {
                     return (
-                      <div key={index} className="mt-4 flex w-full justify-center items-center text-center ">
+                      <div
+                        key={index}
+                        className="mt-4 flex w-full justify-center items-center text-center "
+                      >
                         <p className="dark:text-white text-nft-black-1 font-normal text-base">
                           ${donation.donationAmount}
                         </p>
@@ -271,93 +236,97 @@ const AssetDetails = () => {
           </div>
         )}
       </div>
-      
-   {paymentModal && (
-    <div
-      onClick={handleClickOutside}
-      className="flexCenter fixed inset-0 z-10 bg-overlay-black animated fadeIn"
-    >
-      <div
-        ref={modalRef}
-        className="w-2/5 md:w-11/12 minlg:w-2/4 dark:bg-nft-dark bg-white flex flex-col rounded-lg"
-      >
-        <div className="flex justify-end mt-4 mr-4 minlg:mt-6 minlg:mr-6">
+
+      {paymentModal && (
+        <div
+          onClick={handleClickOutside}
+          className="flexCenter fixed inset-0 z-10 bg-overlay-black animated fadeIn"
+        >
           <div
-            className="relative w-3 h-3 minlg:w-6 minlg:h-6 cursor-pointer"
-            onClick={() => setPaymentModal(false)}
+            ref={modalRef}
+            className="w-2/5 md:w-11/12 minlg:w-2/4 dark:bg-nft-dark bg-white flex flex-col rounded-lg"
           >
-            <Image
-              src={images.cross}
-              layout="fill"
-              className={theme === "light" ? "filter invert" : undefined}
-            />
-          </div>
-        </div>
-
-        <div className="flexCenter w-full text-center p-4">
-          <h2 className="font-poppins dark:text-white text-nft-black-1 font-normal text-2xl">
-             Make A Donation
-          </h2>
-        </div>
-        <div className="p-10 sm:px-4 border-t border-b dark:border-nft-black-3 border-nft-gray-1">
-          <div className="flex flex-col text-center justify-center">
-            <p className="font-poppins text-center dark:text-white text-nft-black-1 text-bold minlg:text-xl font-normal">
-              {fundraiser?.name}
-            </p>
-
-            <div className="my-5 flex w-full justify-center items-center">
-              <div className="relative w-28 h-28 rounded-md">
-                <Image src={fundraiser.imageURL} alt="fundraiser-imageUrl" layout="fill" objectFit="cover" />
-              </div>
-            </div>
-
-            <div>
-              
-              <div className="dark:bg-nft-black-1 bg-white border dark:border-nft-black-1 border-nft-gray-2 rounded-lg w-full outline-none font-poppins dark:text-white text-nft-gray-2 text-base mt-4 px-4 py-3 flexBetween flex-row">
-                <input
-                  title="Donation amount"
-                  type="number"
-                  value={donationValue}
-                  onChange={(e) => setDonationValue(e.target.value)}
-                  placeholder="Donation amount in USD"
-                  className="flex-1 w-full dark:bg-nft-black-1 bg-white outline-none "
+            <div className="flex justify-end mt-4 mr-4 minlg:mt-6 minlg:mr-6">
+              <div
+                className="relative w-3 h-3 minlg:w-6 minlg:h-6 cursor-pointer"
+                onClick={() => setPaymentModal(false)}
+              >
+                <Image
+                  src={images.cross}
+                  layout="fill"
+                  className={theme === "light" ? "filter invert" : undefined}
                 />
-
-                <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl">
-                  CELO
-                </p>
               </div>
             </div>
 
-            <div className="flexBetween mt-10">
-              <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">
-                Total CELO:
-              </p>
-              <p className="font-poppins dark:text-white text-nft-black-1 text-base minlg:text-xl font-normal">
-                {CELOAmount}{" "}
-                <span className="font-semibold">CELO</span>
-              </p>
+            <div className="flexCenter w-full text-center p-4">
+              <h2 className="font-poppins dark:text-white text-nft-black-1 font-normal text-2xl">
+                Make A Donation
+              </h2>
+            </div>
+            <div className="p-10 sm:px-4 border-t border-b dark:border-nft-black-3 border-nft-gray-1">
+              <div className="flex flex-col text-center justify-center">
+                <p className="font-poppins text-center dark:text-white text-nft-black-1 text-bold minlg:text-xl font-normal">
+                  {fundraiser?.name}
+                </p>
+
+                <div className="my-5 flex w-full justify-center items-center">
+                  <div className="relative w-28 h-28 rounded-md">
+                    <Image
+                      src={fundraiser.imageURL}
+                      alt="fundraiser-imageUrl"
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="dark:bg-nft-black-1 bg-white border dark:border-nft-black-1 border-nft-gray-2 rounded-lg w-full outline-none font-poppins dark:text-white text-nft-gray-2 text-base mt-4 px-4 py-3 flexBetween flex-row">
+                    <input
+                      title="Donation amount"
+                      type="number"
+                      value={donationValue}
+                      onChange={(e) => setDonationValue(e.target.value)}
+                      placeholder="Donation amount in USD"
+                      className="flex-1 w-full dark:bg-nft-black-1 bg-white outline-none "
+                    />
+
+                    <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl">
+                      USD
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flexBetween mt-10">
+                  <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">
+                    Total CELO:
+                  </p>
+                  <p className="font-poppins dark:text-white text-nft-black-1 text-base minlg:text-xl font-normal">
+                    {CELOAmount} <span className="font-semibold">CELO</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flexCenter p-4">
+              <div className="flex flex-row sm:flex-col">
+                <Button
+                  btnName="Donate"
+                  btnType="primary"
+                  classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                  handleClick={() => submitFunds(fundraiser.address)}
+                />
+                <Button
+                  btnName="Cancel"
+                  btnType="outline"
+                  classStyles="rounded-lg"
+                  handleClick={() => setPaymentModal(false)}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div className="flexCenter p-4">
-          <div className="flex flex-row sm:flex-col">
-            <Button
-              btnName="Donate"
-              btnType="primary"
-              classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
-              handleClick={() => submitFunds(fundraiser.address)}
-            />
-            <Button
-              btnName="Cancel"
-              btnType="outline"
-              classStyles="rounded-lg"
-              handleClick={() => setPaymentModal(false)}
-            />
-          </div>
-        </div>
-      </div>
-    </div>)}
+      )}
 
       {sending && (
         <Modal
@@ -410,12 +379,13 @@ const AssetDetails = () => {
                 btnName="Print Receipt"
                 btnType="primary"
                 classStyles="sm:mr-0 sm:mb-5 rounded-xl"
+                handleClick={() => setSuccessModal(false)}
               />
             </div>
           }
           handleClose={() => setSuccessModal(false)}
         />
-        )}
+      )}
     </div>
   );
 };

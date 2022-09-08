@@ -2,8 +2,8 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    loader: 'akamai',
-    path: '',
+    loader: "akamai",
+    path: "",
     domains: ["ipfs.infura.io"],
   },
 };

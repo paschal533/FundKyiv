@@ -6,12 +6,14 @@ const FundraiserCard = ({ fundraiser }) => {
   return (
     <Link href={{ pathname: "/fundraiser-details", query: fundraiser }}>
       <div className="flex-1 min-w-215 max-w-max xs:max-w-none sm:w-full sm:min-w-155 minmd:min-w-256 minlg:min-w-327 dark:bg-nft-black-3 bg-white rounded-2xl p-4 m-4 minlg:m-8 sm:my-2 sm:mx-2 cursor-pointer shadow-md">
-        <div className="relative w-[300px] sm:w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl overflow-hidden">
+        <div className="relative sm:w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl overflow-hidden">
           <Image
             src={fundraiser?.imageURL}
             layout="fill"
             objectFit="cover"
             alt="nft01"
+            width={100}
+            height={100}
           />
         </div>
         <div className="mt-3 flex flex-col">

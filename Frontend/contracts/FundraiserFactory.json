@@ -6262,21 +6262,11 @@
   "ast": {
     "absolutePath": "/C/Users/PASCHAL/Downloads/FundCFX-main/FundCFX-main/smart-contract/contracts/FundraiserFactory.sol",
     "exportedSymbols": {
-      "Context": [
-        21
-      ],
-      "Fundraiser": [
-        285
-      ],
-      "FundraiserFactory": [
-        431
-      ],
-      "Ownable": [
-        573
-      ],
-      "SafeMath": [
-        885
-      ]
+      "Context": [21],
+      "Fundraiser": [285],
+      "FundraiserFactory": [431],
+      "Ownable": [573],
+      "SafeMath": [885]
     },
     "id": 432,
     "license": "MIT",
@@ -6284,12 +6274,7 @@
     "nodes": [
       {
         "id": 287,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "32:23:2"
       },
@@ -6307,15 +6292,11 @@
       {
         "abstract": false,
         "baseContracts": [],
-        "contractDependencies": [
-          285
-        ],
+        "contractDependencies": [285],
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 431,
-        "linearizedBaseContracts": [
-          431
-        ],
+        "linearizedBaseContracts": [431],
         "name": "FundraiserFactory",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -6486,9 +6467,7 @@
               "src": "451:237:2",
               "statements": [
                 {
-                  "assignments": [
-                    317
-                  ],
+                  "assignments": [317],
                   "declarations": [
                     {
                       "constant": false,
@@ -7189,10 +7168,7 @@
                       "id": 363,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "1017:7:2",
                       "typeDescriptions": {
@@ -7220,9 +7196,7 @@
                   "src": "1017:61:2"
                 },
                 {
-                  "assignments": [
-                    372
-                  ],
+                  "assignments": [372],
                   "declarations": [
                     {
                       "constant": false,
@@ -7816,9 +7790,7 @@
                   },
                   "id": 426,
                   "initializationExpression": {
-                    "assignments": [
-                      406
-                    ],
+                    "assignments": [406],
                     "declarations": [
                       {
                         "constant": false,
@@ -8053,21 +8025,11 @@
   "legacyAST": {
     "absolutePath": "/C/Users/PASCHAL/Downloads/FundCFX-main/FundCFX-main/smart-contract/contracts/FundraiserFactory.sol",
     "exportedSymbols": {
-      "Context": [
-        21
-      ],
-      "Fundraiser": [
-        285
-      ],
-      "FundraiserFactory": [
-        431
-      ],
-      "Ownable": [
-        573
-      ],
-      "SafeMath": [
-        885
-      ]
+      "Context": [21],
+      "Fundraiser": [285],
+      "FundraiserFactory": [431],
+      "Ownable": [573],
+      "SafeMath": [885]
     },
     "id": 432,
     "license": "MIT",
@@ -8075,12 +8037,7 @@
     "nodes": [
       {
         "id": 287,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "32:23:2"
       },
@@ -8098,15 +8055,11 @@
       {
         "abstract": false,
         "baseContracts": [],
-        "contractDependencies": [
-          285
-        ],
+        "contractDependencies": [285],
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 431,
-        "linearizedBaseContracts": [
-          431
-        ],
+        "linearizedBaseContracts": [431],
         "name": "FundraiserFactory",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -8277,9 +8230,7 @@
               "src": "451:237:2",
               "statements": [
                 {
-                  "assignments": [
-                    317
-                  ],
+                  "assignments": [317],
                   "declarations": [
                     {
                       "constant": false,
@@ -8980,10 +8931,7 @@
                       "id": 363,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [
-                        4294967278,
-                        4294967278
-                      ],
+                      "overloadedDeclarations": [4294967278, 4294967278],
                       "referencedDeclaration": 4294967278,
                       "src": "1017:7:2",
                       "typeDescriptions": {
@@ -9011,9 +8959,7 @@
                   "src": "1017:61:2"
                 },
                 {
-                  "assignments": [
-                    372
-                  ],
+                  "assignments": [372],
                   "declarations": [
                     {
                       "constant": false,
@@ -9607,9 +9553,7 @@
                   },
                   "id": 426,
                   "initializationExpression": {
-                    "assignments": [
-                      406
-                    ],
+                    "assignments": [406],
                     "declarations": [
                       {
                         "constant": false,

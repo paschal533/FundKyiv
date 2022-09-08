@@ -7971,18 +7971,10 @@
   "ast": {
     "absolutePath": "/C/Users/PASCHAL/Downloads/FundCFX-main/FundCFX-main/smart-contract/contracts/Fundraiser.sol",
     "exportedSymbols": {
-      "Context": [
-        21
-      ],
-      "Fundraiser": [
-        285
-      ],
-      "Ownable": [
-        390
-      ],
-      "SafeMath": [
-        702
-      ]
+      "Context": [21],
+      "Fundraiser": [285],
+      "Ownable": [390],
+      "SafeMath": [702]
     },
     "id": 286,
     "license": "MIT",
@@ -7990,12 +7982,7 @@
     "nodes": [
       {
         "id": 23,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "32:23:1"
       },
@@ -8037,18 +8024,11 @@
             "src": "130:7:1"
           }
         ],
-        "contractDependencies": [
-          21,
-          390
-        ],
+        "contractDependencies": [21, 390],
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 285,
-        "linearizedBaseContracts": [
-          285,
-          390,
-          21
-        ],
+        "linearizedBaseContracts": [285, 390, 21],
         "name": "Fundraiser",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -9240,9 +9220,7 @@
               "src": "1350:294:1",
               "statements": [
                 {
-                  "assignments": [
-                    136
-                  ],
+                  "assignments": [136],
                   "declarations": [
                     {
                       "constant": false,
@@ -9362,10 +9340,7 @@
                     "isPure": false,
                     "kind": "structConstructorCall",
                     "lValueRequested": false,
-                    "names": [
-                      "value",
-                      "date"
-                    ],
+                    "names": ["value", "date"],
                     "nodeType": "FunctionCall",
                     "src": "1383:69:1",
                     "tryCall": false,
@@ -9799,9 +9774,7 @@
               "src": "1778:319:1",
               "statements": [
                 {
-                  "assignments": [
-                    184
-                  ],
+                  "assignments": [184],
                   "declarations": [
                     {
                       "constant": false,
@@ -10069,9 +10042,7 @@
                     "src": "1930:134:1",
                     "statements": [
                       {
-                        "assignments": [
-                          216
-                        ],
+                        "assignments": [216],
                         "declarations": [
                           {
                             "constant": false,
@@ -10399,9 +10370,7 @@
                   },
                   "id": 239,
                   "initializationExpression": {
-                    "assignments": [
-                      205
-                    ],
+                    "assignments": [205],
                     "declarations": [
                       {
                         "constant": false,
@@ -10636,9 +10605,7 @@
               "src": "2161:111:1",
               "statements": [
                 {
-                  "assignments": [
-                    251
-                  ],
+                  "assignments": [251],
                   "declarations": [
                     {
                       "constant": false,
@@ -11083,18 +11050,10 @@
   "legacyAST": {
     "absolutePath": "/C/Users/PASCHAL/Downloads/FundCFX-main/FundCFX-main/smart-contract/contracts/Fundraiser.sol",
     "exportedSymbols": {
-      "Context": [
-        21
-      ],
-      "Fundraiser": [
-        285
-      ],
-      "Ownable": [
-        390
-      ],
-      "SafeMath": [
-        702
-      ]
+      "Context": [21],
+      "Fundraiser": [285],
+      "Ownable": [390],
+      "SafeMath": [702]
     },
     "id": 286,
     "license": "MIT",
@@ -11102,12 +11061,7 @@
     "nodes": [
       {
         "id": 23,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "32:23:1"
       },
@@ -11149,18 +11103,11 @@
             "src": "130:7:1"
           }
         ],
-        "contractDependencies": [
-          21,
-          390
-        ],
+        "contractDependencies": [21, 390],
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 285,
-        "linearizedBaseContracts": [
-          285,
-          390,
-          21
-        ],
+        "linearizedBaseContracts": [285, 390, 21],
         "name": "Fundraiser",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -12352,9 +12299,7 @@
               "src": "1350:294:1",
               "statements": [
                 {
-                  "assignments": [
-                    136
-                  ],
+                  "assignments": [136],
                   "declarations": [
                     {
                       "constant": false,
@@ -12474,10 +12419,7 @@
                     "isPure": false,
                     "kind": "structConstructorCall",
                     "lValueRequested": false,
-                    "names": [
-                      "value",
-                      "date"
-                    ],
+                    "names": ["value", "date"],
                     "nodeType": "FunctionCall",
                     "src": "1383:69:1",
                     "tryCall": false,
@@ -12911,9 +12853,7 @@
               "src": "1778:319:1",
               "statements": [
                 {
-                  "assignments": [
-                    184
-                  ],
+                  "assignments": [184],
                   "declarations": [
                     {
                       "constant": false,
@@ -13181,9 +13121,7 @@
                     "src": "1930:134:1",
                     "statements": [
                       {
-                        "assignments": [
-                          216
-                        ],
+                        "assignments": [216],
                         "declarations": [
                           {
                             "constant": false,
@@ -13511,9 +13449,7 @@
                   },
                   "id": 239,
                   "initializationExpression": {
-                    "assignments": [
-                      205
-                    ],
+                    "assignments": [205],
                     "declarations": [
                       {
                         "constant": false,
@@ -13748,9 +13684,7 @@
               "src": "2161:111:1",
               "statements": [
                 {
-                  "assignments": [
-                    251
-                  ],
+                  "assignments": [251],
                   "declarations": [
                     {
                       "constant": false,

@@ -27,5 +27,5 @@ export {
   Profile,
   Transactions,
   Balance,
-  Steps
+  Steps,
 };

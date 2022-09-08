@@ -49,7 +49,7 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
   );
 };
 
-const ButtonGroup = ({ setActive, router }) => {
+const ButtonGroup = ({ setActive, router, setIsOpen }) => {
   const { connectWallet, currentAccount } = useContext(FundraiserContext);
 
   return currentAccount ? (
@@ -60,6 +60,7 @@ const ButtonGroup = ({ setActive, router }) => {
         classStyles="mx-2 rounded-xl"
         handleClick={() => {
           setActive("");
+          setIsOpen(false);
           router.push("/create");
         }}
       />
@@ -172,7 +173,11 @@ const Navbar = ({ color = "white" }) => {
             <MenuItems active={active} setActive={setActive} />
           </ul>
           <div className="ml-4">
-            <ButtonGroup setActive={setActive} router={router} />
+            <ButtonGroup
+              setActive={setActive}
+              router={router}
+              setIsOpen={setIsOpen}
+            />
           </div>
         </div>
       </div>
@@ -211,7 +216,11 @@ const Navbar = ({ color = "white" }) => {
               />
             </div>
             <div className="p-4 border-t dark:border-nft-black-1 border-nft-gray-1">
-              <ButtonGroup setActive={setActive} router={router} />
+              <ButtonGroup
+                setActive={setActive}
+                router={router}
+                setIsOpen={setIsOpen}
+              />
             </div>
           </div>
         )}

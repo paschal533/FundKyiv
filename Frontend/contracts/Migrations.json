@@ -937,9 +937,7 @@
   "ast": {
     "absolutePath": "/C/Users/PASCHAL/Downloads/FundCFX-main/FundCFX-main/smart-contract/contracts/Migrations.sol",
     "exportedSymbols": {
-      "Migrations": [
-        468
-      ]
+      "Migrations": [468]
     },
     "id": 469,
     "license": "MIT",
@@ -947,12 +945,7 @@
     "nodes": [
       {
         "id": 433,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "33:23:3"
       },
@@ -963,9 +956,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 468,
-        "linearizedBaseContracts": [
-          468
-        ],
+        "linearizedBaseContracts": [468],
         "name": "Migrations",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1326,9 +1317,7 @@
   "legacyAST": {
     "absolutePath": "/C/Users/PASCHAL/Downloads/FundCFX-main/FundCFX-main/smart-contract/contracts/Migrations.sol",
     "exportedSymbols": {
-      "Migrations": [
-        468
-      ]
+      "Migrations": [468]
     },
     "id": 469,
     "license": "MIT",
@@ -1336,12 +1325,7 @@
     "nodes": [
       {
         "id": 433,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".0"
-        ],
+        "literals": ["solidity", "^", "0.8", ".0"],
         "nodeType": "PragmaDirective",
         "src": "33:23:3"
       },
@@ -1352,9 +1336,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 468,
-        "linearizedBaseContracts": [
-          468
-        ],
+        "linearizedBaseContracts": [468],
         "name": "Migrations",
         "nodeType": "ContractDefinition",
         "nodes": [

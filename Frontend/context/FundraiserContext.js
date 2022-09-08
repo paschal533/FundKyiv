@@ -56,7 +56,9 @@ export const FundraiserProvider = ({ children }) => {
         const imageURL = await instance.imageURL();
         const website = await instance.url();
 
-        const amountInCELO = ethers.utils.formatEther(totalDonations.toString());
+        const amountInCELO = ethers.utils.formatEther(
+          totalDonations.toString()
+        );
         const exchangeRate = await cc.price("CELO", ["USD"]);
         const dollarDonationAmount = exchangeRate.USD * amountInCELO;
         setExchangeRate(exchangeRate.USD);
@@ -243,7 +245,7 @@ export const FundraiserProvider = ({ children }) => {
     );
 
     setIsLoadingFundraiser(true);
-    //await transaction.wait();
+    await transaction.wait();
     handleNewFundraiser();
     setIsLoadingFundraiser(false);
   };

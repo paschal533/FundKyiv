@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import Head from "next/head";
 
 import { FundraiserContext } from "../context/FundraiserContext";
 import { Button, Input, Loader } from "../components";
 import images from "../assets";
 
-const projectId = '2DVU33kuUP8sY2W1MeSqY8NYPDK' //process.env.NEXT_PUBLIC_INFURA_IPFS_PROJECT_ID;
-const projectSecret = 'e7013c3be4305ce0c0487a634db3d9eb' //process.env.NEXT_PUBLIC_INFURA_IPFS_PROJECT_SECRET;
+const projectId = "2DVU33kuUP8sY2W1MeSqY8NYPDK"; //process.env.NEXT_PUBLIC_INFURA_IPFS_PROJECT_ID;
+const projectSecret = "e7013c3be4305ce0c0487a634db3d9eb"; //process.env.NEXT_PUBLIC_INFURA_IPFS_PROJECT_SECRET;
 const projectIdAndSecret = `${projectId}:${projectSecret}`;
 
 const client = ipfsHttpClient({
@@ -98,6 +99,7 @@ const CreateItem = () => {
 
   return (
     <div className="flex justify-center sm:px-4 p-12">
+      <Head>Create</Head>
       <div className="w-3/5 md:w-full">
         <h1 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl">
           Create new Fundraiser
@@ -174,7 +176,7 @@ const CreateItem = () => {
         <Input
           inputType="input"
           title="Address"
-          placeholder="Fundraiser Conflux eSpace Address"
+          placeholder="Fundraiser CELO Address"
           handleClick={(e) =>
             updateFormInput({ ...formInput, address: e.target.value })
           }

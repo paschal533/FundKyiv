@@ -1,6 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { FundraiserContext } from "../context/FundraiserContext";
-import { Banner, SearchBar, FundraiserCard, Loader, Steps } from "../components";
+import {
+  Banner,
+  SearchBar,
+  FundraiserCard,
+  Loader,
+  Steps,
+} from "../components";
+import Link from "next/link";
+import Head from "next/head";
+import { Button } from "@chakra-ui/react";
 
 const Home = () => {
   const { fundraisers, isLoadingFundraiser } = useContext(FundraiserContext);
@@ -33,6 +42,7 @@ const Home = () => {
 
   return (
     <div className="justify-center">
+      <Head>Home | FundKyiv</Head>
       <div className="w-full minmd:w-4/5 sm:px-4 p-12">
         <Banner
           name={
@@ -59,16 +69,43 @@ const Home = () => {
               />
             </div>
           </div>
-          <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
+          <div className="mt-3 pl-7 pr-7 sm:pl-0 sm:pr-0 w-full flex flex-wrap justify-start md:justify-center">
             {!isLoadingFundraiser ? (
-              newFundraisers?.map((fundraiser, index) => (
-                <FundraiserCard key={index} fundraiser={fundraiser} />
-              ))
+              newFundraisers
+                ?.reverse()
+                .slice(0, 3)
+                .map((fundraiser, index) => (
+                  <FundraiserCard key={index} fundraiser={fundraiser} />
+                ))
             ) : (
               <Loader />
             )}
           </div>
         </div>
+      </div>
+      <div className="w-full justify-center items-center sm:p-2 p-0 flex mb-8">
+        <Link href="/fundraisers">
+          <Button
+            as="a"
+            backgroundColor="#3198FE"
+            border="1px solid #3198FE"
+            color="white"
+            _hover={{
+              backgroundColor: "#000",
+              border: "1px solid #3198FE",
+              color: "white",
+            }}
+            display="inline-flex"
+            alignItems="center"
+            justifyContent="center"
+            w={{ base: "full", sm: "auto" }}
+            mb={{ base: 2, sm: 0 }}
+            size="lg"
+            cursor="pointer"
+          >
+            View more Fundraisers
+          </Button>
+        </Link>
       </div>
       <Steps />
     </div>
