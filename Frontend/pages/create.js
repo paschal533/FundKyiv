@@ -10,8 +10,8 @@ import { FundraiserContext } from "../context/FundraiserContext";
 import { Button, Input, Loader } from "../components";
 import images from "../assets";
 
-const projectId = "2DVU33kuUP8sY2W1MeSqY8NYPDK"; //process.env.NEXT_PUBLIC_INFURA_IPFS_PROJECT_ID;
-const projectSecret = "e7013c3be4305ce0c0487a634db3d9eb"; //process.env.NEXT_PUBLIC_INFURA_IPFS_PROJECT_SECRET;
+const projectId = process.env.NEXT_PUBLIC_INFURA_IPFS_PROJECT_ID;
+const projectSecret = process.env.NEXT_PUBLIC_INFURA_IPFS_PROJECT_SECRET;
 const projectIdAndSecret = `${projectId}:${projectSecret}`;
 
 const client = ipfsHttpClient({
