@@ -69,11 +69,11 @@ const Home = () => {
               />
             </div>
           </div>
-          <div className="mt-3 pl-7 pr-7 sm:pl-0 sm:pr-0 w-full flex flex-wrap justify-start md:justify-center">
+          <div className="mt-4 w-full flex flex-wrap justify-start md:justify-center">
             {!isLoadingFundraiser ? (
               newFundraisers
                 ?.reverse()
-                .slice(0, 3)
+                .slice(0, 4)
                 .map((fundraiser, index) => (
                   <FundraiserCard key={index} fundraiser={fundraiser} />
                 ))
