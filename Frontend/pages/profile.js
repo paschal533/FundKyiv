@@ -112,7 +112,7 @@ export default function Home() {
                   Transactions
                 </Tab>
                 <Tab _selected={{ color: "white" }} fontWeight="bold">
-                  Send CFX
+                  Send CELO
                 </Tab>
               </TabList>
               <TabPanels>

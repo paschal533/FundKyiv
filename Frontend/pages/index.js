@@ -83,7 +83,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="w-full justify-center items-center sm:p-2 p-0 flex mb-8">
+      {!isLoadingFundraiser && <div className="w-full justify-center items-center sm:p-2 p-0 flex mb-8">
         <Link href="/fundraisers">
           <Button
             as="a"
@@ -106,7 +106,7 @@ const Home = () => {
             View more Fundraisers
           </Button>
         </Link>
-      </div>
+      </div>}
       <Steps />
     </div>
   );
