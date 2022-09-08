@@ -4,6 +4,6 @@ module.exports = {
   images: {
     loader: "akamai",
     path: "",
-    domains: ["ipfs.infura.io"],
+    domains: ["fundmatic.infura-ipfs.io"],
   },
 };
