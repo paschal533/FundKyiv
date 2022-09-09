@@ -53,7 +53,7 @@ export const FundraiserProvider = ({ children }) => {
         const name = await instance.name();
         const description = await instance.description();
         const totalDonations = await instance.totalDonations();
-        //const imageURL = await instance.imageURL();
+        const imageURL = await instance.imageURL();
         const website = await instance.url();
 
         const amountInCELO = ethers.utils.formatEther(
