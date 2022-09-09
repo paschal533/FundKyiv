@@ -51,7 +51,7 @@ export const FundraiserProvider = ({ children }) => {
       data.map(async (item) => {
         const instance = fetchFundraiserContract(provider, item);
         const name = await instance.name();
-        const description = await instance.description();
+        //const description = await instance.description();
         const totalDonations = await instance.totalDonations();
         const imageURL = await instance.imageURL();
         const website = await instance.url();
