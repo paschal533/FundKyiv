@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
-import { useToast, Button } from "@chakra-ui/react";
-const cc = require("cryptocompare");
+import { toast } from "../services/toast";
+import cc from "cryptocompare";
 
 import {
   FundraiserFactoryAddress,
@@ -33,8 +33,6 @@ export const FundraiserProvider = ({ children }) => {
   const [successModal, setSuccessModal] = useState(false);
   const [sending, setSending] = useState(false);
   const [loadDonations, setLoadDonations] = useState(true);
-
-  const toast = useToast();
 
   // fetch all fundraisers
   const fetchFundraisers = async () => {
@@ -78,9 +76,10 @@ export const FundraiserProvider = ({ children }) => {
     setIsLoadingFundraiser(false);
   };
 
-  useEffect(() => {
-    fetchFundraisers();
-  }, []);
+  // TODO: Fetch into the main page
+  // useEffect(() => {
+  //   fetchFundraisers();
+  // }, []);
 
   // Not Authenticated toast
   const handleNewNotification = () => {
@@ -321,6 +320,8 @@ export const FundraiserProvider = ({ children }) => {
 
     setCurrentAccount(accounts[0]);
     handleConnect();
+
+    // TODO: Why do we need reload the page is we can watch for account changes?
     window.location.reload();
   };
 
@@ -338,13 +339,10 @@ export const FundraiserProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    checkIfWalletIsConnect();
-  }, []);
-
   return (
     <FundraiserContext.Provider
       value={{
+        checkIfWalletIsConnect,
         FundraiserCurrency,
         loadDonations,
         setLoadDonations,
