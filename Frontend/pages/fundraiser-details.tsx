@@ -19,34 +19,27 @@ const AssetDetails = () => {
     setLoadDonations,
     loadDonations,
     withdrawalFunds,
-    GetFundRaiserDetails,
+    getFundRaiserDetails,
     setSuccessModal,
     sending,
     successModal,
     CELOAmount,
     submitFunds,
     donationValue,
+    userDonations,
     setDonationValue,
     currentAccount,
-    renderDonationsList,
     connectWallet,
   } = useContext(FundraiserContext);
-  const [fundraiser, setFundraiser] = useState({
-    imageURL: "",
-    name: "",
-    description: "",
-    address: "",
-  });
+
   const [paymentModal, setPaymentModal] = useState(false);
-  const [myDonations, setMyDonations] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const modalRef = useRef(null);
   const { theme } = useTheme();
   const router = useRouter();
 
-  // check if it is cliked outside of modalRef
+  // check if it is clicked outside of modalRef
   const handleClickOutside = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
+    if (modalRef?.current && !modalRef.current.contains(e.target)) {
       setPaymentModal(false);
     }
   };
@@ -60,60 +53,59 @@ const AssetDetails = () => {
     }
   }, [paymentModal, successModal]);
 
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    setFundraiser(router.query);
-
-    setIsLoading(false);
-  }, [router.isReady, router.query.address, router.query]);
+  const fundraiser = router.query;
 
   useEffect(() => {
-    const GetDonationList = async (address) => {
+    const GetDonationList = async (address?: string) => {
+      if (!address) {
+        return;
+      }
+
       try {
         setLoadDonations(true);
-        await GetFundRaiserDetails(address);
-        const donations = await renderDonationsList();
-        setMyDonations(donations);
-        setLoadDonations(false);
+        await getFundRaiserDetails(address);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoadDonations(false);
       }
     };
 
-    GetDonationList(fundraiser.address);
+    GetDonationList(fundraiser.address as string);
   }, [fundraiser.address, setLoadDonations]);
 
-  if (isLoading) return <Loader />;
+  if (!fundraiser.address) {
+    return <Loader />;
+  }
 
   return (
-    <div className="relative flex justify-center md:flex-col min-h-screen">
+    <div className="relative flex justify-center min-h-screen md:flex-col">
       <Head>Fundraiser Details</Head>
-      <div className="relative flex-1 flexCenter sm:px-4 p-12 border-r md:border-r-0 md:border-b dark:border-nft-black-1 border-nft-gray-1">
+      <div className="relative flex-1 p-12 border-r flexCenter sm:px-4 md:border-r-0 md:border-b dark:border-nft-black-1 border-nft-gray-1">
         <div className="relative w-557 minmd:w-2/3 minmd:h-2/3 sm:w-full sm:h-300 h-557 ">
           <Image
             alt="fundraiser-imageURL"
-            src={fundraiser.imageURL}
+            src={fundraiser.imageURL as string}
             objectFit="cover"
-            className=" rounded-xl shadow-lg"
+            className="shadow-lg rounded-xl"
             layout="fill"
           />
         </div>
       </div>
 
-      <div className="flex-1 justify-start sm:px-4 p-12 sm:pb-4">
+      <div className="justify-start flex-1 p-12 sm:px-4 sm:pb-4">
         <div className="flex flex-row sm:flex-col">
-          <h2 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl minlg:text-3xl">
+          <h2 className="text-2xl font-semibold font-poppins dark:text-white text-nft-black-1 minlg:text-3xl">
             {fundraiser.name}
           </h2>
         </div>
 
         <div className="mt-10">
-          <p className="font-poppins dark:text-white text-nft-black-1 text-xs minlg:text-base font-normal">
+          <p className="text-xs font-normal font-poppins dark:text-white text-nft-black-1 minlg:text-base">
             Creator
           </p>
           <div className="flex flex-row items-center mt-3">
-            <div className="relative w-12 h-12 minlg:w-20 minlg:h-20 mr-2">
+            <div className="relative w-12 h-12 mr-2 minlg:w-20 minlg:h-20">
               <Image
                 alt="creator1"
                 src={images.creator1}
@@ -121,20 +113,20 @@ const AssetDetails = () => {
                 className="rounded-full"
               />
             </div>
-            <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-lg font-semibold">
+            <p className="text-sm font-semibold font-poppins dark:text-white text-nft-black-1 minlg:text-lg">
               {shortenAddress(fundraiser.address)}
             </p>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col">
-          <div className="w-full border-b dark:border-nft-black-1 border-nft-gray-1 flex flex-row">
-            <p className="font-poppins dark:text-white text-nft-black-1 font-medium text-base mb-2">
+        <div className="flex flex-col mt-10">
+          <div className="flex flex-row w-full border-b dark:border-nft-black-1 border-nft-gray-1">
+            <p className="mb-2 text-base font-medium font-poppins dark:text-white text-nft-black-1">
               Details
             </p>
           </div>
           <div className="mt-3">
-            <p className="font-poppins mb-4 dark:text-white text-nft-black-1 font-normal text-base">
+            <p className="mb-4 text-base font-normal font-poppins dark:text-white text-nft-black-1">
               {fundraiser.description}
             </p>
 
@@ -151,7 +143,7 @@ const AssetDetails = () => {
             </a>
           </div>
         </div>
-        <div className="flex flex-row sm:flex-col mt-10">
+        <div className="flex flex-row mt-10 sm:flex-col">
           {currentAccount ? (
             <Button
               btnName="Make a donation"
@@ -179,18 +171,18 @@ const AssetDetails = () => {
         {!loadDonations ? (
           <div>
             {currentAccount && (
-              <div className="mt-8 w-full justify-center items-center text-center">
-                <h1 className="dark:text-white text-nft-black-1 font-bold text-2xl">
+              <div className="items-center justify-center w-full mt-8 text-center">
+                <h1 className="text-2xl font-bold dark:text-white text-nft-black-1">
                   My Donations
                 </h1>
-                {myDonations?.length > 0 ? (
-                  myDonations.map((donation, index) => {
+                {userDonations !== null && userDonations.length > 0 ? (
+                  userDonations.map((donation, index) => {
                     return (
                       <div
                         key={index}
-                        className="mt-4 flex w-full justify-center items-center text-center "
+                        className="flex items-center justify-center w-full mt-4 text-center "
                       >
-                        <p className="dark:text-white text-nft-black-1 font-normal text-base">
+                        <p className="text-base font-normal dark:text-white text-nft-black-1">
                           ${donation.donationAmount}
                         </p>
                         <Link
@@ -204,7 +196,7 @@ const AssetDetails = () => {
                             },
                           }}
                         >
-                          <p className="nft-gradient text-sm minlg:text-lg ml-3 rounded-md py-2 px-6 minlg:py-4 minlg:px-8 font-poppins font-semibold text-white">
+                          <p className="px-6 py-2 ml-3 text-sm font-semibold text-white rounded-md nft-gradient minlg:text-lg minlg:py-4 minlg:px-8 font-poppins">
                             Request Receipt
                           </p>
                         </Link>
@@ -212,7 +204,7 @@ const AssetDetails = () => {
                     );
                   })
                 ) : (
-                  <p className="dark:text-white mt-4 text-nft-black-1 font-normal text-base">
+                  <p className="mt-4 text-base font-normal dark:text-white text-nft-black-1">
                     No donation record found
                   </p>
                 )}
@@ -220,8 +212,8 @@ const AssetDetails = () => {
             )}
           </div>
         ) : (
-          <div className="w-full mt-4 justify-center text-center items-center">
-            <h1 className="dark:text-white text-nft-black-1 font-bold text-2xl">
+          <div className="items-center justify-center w-full mt-4 text-center">
+            <h1 className="text-2xl font-bold dark:text-white text-nft-black-1">
               My Donations
             </h1>
             <div className="sm:mb-8 mb-0 flexCenter h-[2vh] mt-8 w-full">
@@ -240,15 +232,15 @@ const AssetDetails = () => {
       {paymentModal && (
         <div
           onClick={handleClickOutside}
-          className="flexCenter fixed inset-0 z-10 bg-overlay-black animated fadeIn"
+          className="fixed inset-0 z-10 flexCenter bg-overlay-black animated fadeIn"
         >
           <div
             ref={modalRef}
-            className="w-2/5 md:w-11/12 minlg:w-2/4 dark:bg-nft-dark bg-white flex flex-col rounded-lg"
+            className="flex flex-col w-2/5 bg-white rounded-lg md:w-11/12 minlg:w-2/4 dark:bg-nft-dark"
           >
             <div className="flex justify-end mt-4 mr-4 minlg:mt-6 minlg:mr-6">
               <div
-                className="relative w-3 h-3 minlg:w-6 minlg:h-6 cursor-pointer"
+                className="relative w-3 h-3 cursor-pointer minlg:w-6 minlg:h-6"
                 onClick={() => setPaymentModal(false)}
               >
                 <Image
@@ -259,19 +251,19 @@ const AssetDetails = () => {
               </div>
             </div>
 
-            <div className="flexCenter w-full text-center p-4">
-              <h2 className="font-poppins dark:text-white text-nft-black-1 font-normal text-2xl">
+            <div className="w-full p-4 text-center flexCenter">
+              <h2 className="text-2xl font-normal font-poppins dark:text-white text-nft-black-1">
                 Make A Donation
               </h2>
             </div>
-            <div className="p-10 sm:px-4 border-t border-b dark:border-nft-black-3 border-nft-gray-1">
-              <div className="flex flex-col text-center justify-center">
-                <p className="font-poppins text-center dark:text-white text-nft-black-1 text-bold minlg:text-xl font-normal">
+            <div className="p-10 border-t border-b sm:px-4 dark:border-nft-black-3 border-nft-gray-1">
+              <div className="flex flex-col justify-center text-center">
+                <p className="font-normal text-center font-poppins dark:text-white text-nft-black-1 text-bold minlg:text-xl">
                   {fundraiser?.name}
                 </p>
 
-                <div className="my-5 flex w-full justify-center items-center">
-                  <div className="relative w-28 h-28 rounded-md">
+                <div className="flex items-center justify-center w-full my-5">
+                  <div className="relative rounded-md w-28 h-28">
                     <Image
                       src={fundraiser.imageURL}
                       alt="fundraiser-imageUrl"
@@ -282,33 +274,33 @@ const AssetDetails = () => {
                 </div>
 
                 <div>
-                  <div className="dark:bg-nft-black-1 bg-white border dark:border-nft-black-1 border-nft-gray-2 rounded-lg w-full outline-none font-poppins dark:text-white text-nft-gray-2 text-base mt-4 px-4 py-3 flexBetween flex-row">
+                  <div className="flex-row w-full px-4 py-3 mt-4 text-base bg-white border rounded-lg outline-none dark:bg-nft-black-1 dark:border-nft-black-1 border-nft-gray-2 font-poppins dark:text-white text-nft-gray-2 flexBetween">
                     <input
                       title="Donation amount"
                       type="number"
                       value={donationValue}
                       onChange={(e) => setDonationValue(e.target.value)}
                       placeholder="Donation amount in USD"
-                      className="flex-1 w-full dark:bg-nft-black-1 bg-white outline-none "
+                      className="flex-1 w-full bg-white outline-none dark:bg-nft-black-1 "
                     />
 
-                    <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl">
+                    <p className="text-xl font-semibold font-poppins dark:text-white text-nft-black-1">
                       USD
                     </p>
                   </div>
                 </div>
 
-                <div className="flexBetween mt-10">
-                  <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">
+                <div className="mt-10 flexBetween">
+                  <p className="text-base font-semibold font-poppins dark:text-white text-nft-black-1 minlg:text-xl">
                     Total CELO:
                   </p>
-                  <p className="font-poppins dark:text-white text-nft-black-1 text-base minlg:text-xl font-normal">
+                  <p className="text-base font-normal font-poppins dark:text-white text-nft-black-1 minlg:text-xl">
                     {CELOAmount} <span className="font-semibold">CELO</span>
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flexCenter p-4">
+            <div className="p-4 flexCenter">
               <div className="flex flex-row sm:flex-col">
                 <Button
                   btnName="Donate"
@@ -332,7 +324,7 @@ const AssetDetails = () => {
         <Modal
           header="Making donation"
           body={
-            <div className="flexCenter flex-col text-center">
+            <div className="flex-col text-center flexCenter">
               <div className="relative w-52 h-52">
                 <div className="flexCenter h-[10vh] w-full my-4">
                   <Spinner
@@ -355,18 +347,18 @@ const AssetDetails = () => {
           header="Payment Successful"
           body={
             <div
-              className="flexCenter flex-col text-center"
+              className="flex-col text-center flexCenter"
               onClick={() => setSuccessModal(false)}
             >
               <div className="relative w-52 h-52">
                 <Image
                   alt="fundraiser"
-                  src={fundraiser.imageURL}
+                  src={fundraiser.imageURL as string}
                   objectFit="cover"
                   layout="fill"
                 />
               </div>
-              <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-xl font-normal mt-10">
+              <p className="mt-10 text-sm font-normal font-poppins dark:text-white text-nft-black-1 minlg:text-xl">
                 {" "}
                 You successfully donated $ {donationValue} USD to{" "}
                 <span className="font-semibold">{fundraiser.name}</span>
@@ -374,7 +366,7 @@ const AssetDetails = () => {
             </div>
           }
           footer={
-            <div className="flexCenter flex-col">
+            <div className="flex-col flexCenter">
               <Button
                 btnName="Print Receipt"
                 btnType="primary"

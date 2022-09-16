@@ -1,23 +1,23 @@
 import { useContext, useEffect, useState } from "react";
 import { FundraiserContext } from "../context/FundraiserContext";
-
+import { checkIfWalletIsConnect } from "../services/api";
 interface Props {
   children: React.ReactNode;
 }
 
 const AuthLayout = ({ children }: Props) => {
-  const { checkIfWalletIsConnect } = useContext(FundraiserContext);
+  const { setCurrentAccount } = useContext(FundraiserContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await checkIfWalletIsConnect();
+        const account = await checkIfWalletIsConnect();
+        setCurrentAccount(account);
       } finally {
         setIsLoading(false);
       }
     };
-
     checkAuth();
     // TODO: cancel the request if the component is unmounted
   }, []);
