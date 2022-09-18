@@ -1,43 +1,21 @@
-import { useContext, useEffect, useState } from "react";
-import { FundraiserContext } from "../context/FundraiserContext";
-import {
-  Banner,
-  SearchBar,
-  FundraiserCard,
-  Loader,
-  Steps,
-} from "../components";
+import { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { Button } from "@chakra-ui/react";
+import { Banner, SearchBar, FundraiserCard, Loader, Steps } from "@/components";
+import useFundraiserItems from "@/hooks/useFundraisers";
 
 const Home = () => {
-  const { fundraisers, isLoadingFundraiser } = useContext(FundraiserContext);
+  const { fundraisers, isLoadingFundraiser } = useFundraiserItems();
   const [activeSelect, setActiveSelect] = useState("Recently Added");
-  const [newFundraisers, setFundraisers] = useState(fundraisers);
-  const [fundraisersCopy, setFundraisersCopy] = useState(fundraisers);
+  const [searchValue, setSearchValue] = useState("");
 
-  useEffect(() => {
-    setFundraisers(fundraisers);
-    setFundraisersCopy(fundraisers);
-  }, [fundraisers]);
-
-  const onHandleSearch = (value) => {
-    const filteredFundraisers = fundraisers.filter(({ name }) =>
-      name.toLowerCase().includes(value?.toLowerCase())
-    );
-
-    if (filteredFundraisers.length === 0) {
-      setFundraisers(fundraisersCopy);
-    } else {
-      setFundraisers(filteredFundraisers);
-    }
+  const onHandleSearch = (value: string) => {
+    setSearchValue(value.toLowerCase());
   };
 
   const onClearSearch = () => {
-    if (newFundraisers.length && fundraisersCopy.length) {
-      setFundraisers(fundraisersCopy);
-    }
+    setSearchValue("");
   };
 
   return (
@@ -71,9 +49,8 @@ const Home = () => {
           </div>
           <div className="flex flex-wrap justify-start w-full mt-4 md:justify-center">
             {!isLoadingFundraiser ? (
-              newFundraisers
-                ?.reverse()
-                .slice(0, 4)
+              fundraisers
+                .filter(({ name }) => name.toLowerCase().includes(searchValue))
                 .map((fundraiser, index) => (
                   <FundraiserCard key={index} fundraiser={fundraiser} />
                 ))

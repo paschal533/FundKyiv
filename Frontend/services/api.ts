@@ -8,7 +8,7 @@ import {
   Fundraiser__factory,
 } from "../types/ethers-contracts";
 import { handleNewBeneficiary, handleNewNotification } from "./notifications";
-import { MyDonations } from "../types/interfaces";
+import { FundraiserItem, MyDonations } from "../types/interfaces";
 
 export const fetchContract = (
   signerOrProvider: ethers.Signer | ethers.providers.Provider
@@ -23,7 +23,10 @@ export const fetchFundraiserContract = (
   signerOrProvider: ethers.Signer | ethers.providers.Provider
 ) => Fundraiser__factory.connect(fundraiserAddress, signerOrProvider);
 
-export const fetchFundraisers = async (limit = 10, offset = 0) => {
+export const fetchFundraisers = async (
+  limit = 10,
+  offset = 0
+): Promise<FundraiserItem[]> => {
   const provider = new providers.JsonRpcProvider(
     "https://alfajores-forno.celo-testnet.org"
   );
@@ -49,7 +52,6 @@ export const fetchFundraisers = async (limit = 10, offset = 0) => {
       const dollarDonationAmount = amountInCELO * exchangeRate["USD"];
 
       return {
-        exchangeRate,
         name,
         description,
         dollarDonationAmount,

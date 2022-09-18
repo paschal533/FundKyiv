@@ -8,7 +8,6 @@ import {
   handleWithdraw,
 } from "../services/notifications";
 import * as API from "../services/api";
-import { Fundraiser } from "../types/ethers-contracts";
 import { MyDonations } from "../types/interfaces";
 
 type Context = ReturnType<typeof useFundraiserProvider>;
@@ -32,7 +31,6 @@ export const FundraiserProvider = ({ children }: Props) => {
 const useFundraiserProvider = () => {
   const FundraiserCurrency = "CELO";
   const [currentAccount, setCurrentAccount] = useState<null | string>(null);
-  const [fundraisers, setFundraiser] = useState([]);
   const [isLoadingFundraiser, setIsLoadingFundraiser] = useState(false);
   const [donationValue, setDonationValue] = useState(0);
   const [owner, setIsOwner] = useState(false);
@@ -41,21 +39,6 @@ const useFundraiserProvider = () => {
   const [successModal, setSuccessModal] = useState(false);
   const [sending, setSending] = useState(false);
   const [loadDonations, setLoadDonations] = useState(true);
-
-  // fetch all fundraisers
-  const fetchFundraisers = async () => {
-    setIsLoadingFundraiser(true);
-    const items = await API.fetchFundraisers();
-
-    // @ts-ignore TODO: provide items type
-    setFundraiser(items);
-    setIsLoadingFundraiser(false);
-  };
-
-  // TODO: Fetch into the main page
-  React.useEffect(() => {
-    fetchFundraisers();
-  }, []);
 
   // Get a fundraiser details
   const getFundRaiserDetails = async (address: string) => {
@@ -188,9 +171,9 @@ const useFundraiserProvider = () => {
     setDonationValue,
     submitFunds,
     getFundRaiserDetails,
-    fundraisers,
+
     createAFundraiser,
-    fetchFundraisers,
+
     connectWallet,
     currentAccount,
     owner,
