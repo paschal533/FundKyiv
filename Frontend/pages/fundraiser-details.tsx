@@ -133,6 +133,7 @@ const AssetDetails = () => {
             <a
               href={fundraiser.website}
               target="_blank"
+              rel="noreferrer"
               className="font-poppins bg-[] dark:text-white text-nft-black-1 font-normal text-base"
             >
               <Button
