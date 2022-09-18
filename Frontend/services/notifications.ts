@@ -83,3 +83,14 @@ export const handleNotEnough = () => {
     isClosable: true,
   });
 };
+
+export const notifyMetamaskIsNotFounded = () => {
+  toast({
+    position: "top-left",
+    title: "Can't find Metamask",
+    description: "Please install MetaMask.",
+    status: "error",
+    duration: 9000,
+    isClosable: true,
+  });
+};

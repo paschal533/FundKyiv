@@ -1,13 +1,16 @@
 import Web3Modal from "web3modal";
 import { ethers, providers } from "ethers";
 import cc from "cryptocompare";
-
 import { FundraiserFactoryAddress } from "../context/constants";
 import {
   FundraiserFactory__factory,
   Fundraiser__factory,
 } from "../types/ethers-contracts";
-import { handleNewBeneficiary, handleNewNotification } from "./notifications";
+import {
+  handleNewBeneficiary,
+  handleNewNotification,
+  notifyMetamaskIsNotFounded,
+} from "./notifications";
 import { FundraiserItem, MyDonations } from "../types/interfaces";
 
 export const fetchContract = (
@@ -94,8 +97,9 @@ export const getProvider = async () => {
 };
 
 export const connectWallet = async () => {
-  // TODO: Show notification instead of alert
-  if (!window.ethereum) return alert("Please install MetaMask.");
+  if (!window.ethereum) {
+    return notifyMetamaskIsNotFounded();
+  }
 
   const accounts = (await window.ethereum.request({
     method: "eth_requestAccounts",
