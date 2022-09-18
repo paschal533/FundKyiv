@@ -159,21 +159,6 @@ const useFundraiserProvider = () => {
     handleWithdraw();
   };
 
-  // NOTE: The function below is not used, should be removed?
-  // // set a new beneficiary
-  // const setBeneficiary = async (beneficiary, address: string) => {
-  //   if (!currentAccount) {
-  //     return;
-  //   }
-
-  //   const signer = await API.getProvider();
-
-  //   const instance = API.fetchFundraiserContract(address, signer);
-  //   await instance.setBeneficiary(beneficiary, { from: currentAccount });
-
-  //   handleNewBeneficiary();
-  // };
-
   // Connect Wallet
   const connectWallet = async () => {
     const account = await API.connectWallet();

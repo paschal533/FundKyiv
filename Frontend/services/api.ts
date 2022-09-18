@@ -7,7 +7,7 @@ import {
   FundraiserFactory__factory,
   Fundraiser__factory,
 } from "../types/ethers-contracts";
-import { handleNewNotification } from "./notifications";
+import { handleNewBeneficiary, handleNewNotification } from "./notifications";
 import { MyDonations } from "../types/interfaces";
 
 export const fetchContract = (
@@ -151,4 +151,21 @@ export const renderDonationsList = async (donations: MyDonations) => {
     console.error(error);
     return null;
   }
+};
+
+export const setBeneficiary = async (
+  beneficiary: string,
+  address: string,
+  currentAccount: string
+) => {
+  if (!currentAccount) {
+    return;
+  }
+
+  const signer = await getProvider();
+
+  const instance = fetchFundraiserContract(address, signer);
+  await instance.setBeneficiary(beneficiary, { from: currentAccount });
+
+  handleNewBeneficiary();
 };
