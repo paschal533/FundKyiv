@@ -124,8 +124,13 @@ export const renderDonationsList = async (donations: MyDonations) => {
     const donationList = [];
 
     for (let i = 0; i < totalDonations; i++) {
-      const ethAmount = ethers.utils.formatEther(donations[i].toString());
+      const donation = donations[i].toString();
 
+      if (!donation) {
+        continue;
+      }
+
+      const ethAmount = ethers.utils.formatEther(donation);
       const userDonation = exchangeRate["USD"] * ethAmount;
 
       let donationDate;
