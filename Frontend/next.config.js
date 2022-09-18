@@ -10,7 +10,4 @@ module.exports = {
   images: {
     domains: ["fundmatic.infura-ipfs.io"],
   },
-  experimental: {
-    forceSwcTransforms: true,
-  },
 };
