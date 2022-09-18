@@ -43,7 +43,7 @@ const Home = () => {
   return (
     <div className="justify-center">
       <Head>Home | FundKyiv</Head>
-      <div className="w-full minmd:w-4/5 sm:px-4 p-12">
+      <div className="w-full p-12 minmd:w-4/5 sm:px-4">
         <Banner
           name={
             <>
@@ -55,12 +55,12 @@ const Home = () => {
           parentStyle="justify-start mb-7 h-72 sm:h-60 p-12 xs:p-4 xs:h-44 rounded-3xl"
         />
         <div className="mt-10">
-          <div className="flexBetween mx-4 xs:mx-0 minlg:mx-8 sm:flex-col sm:items-start">
-            <h1 className="flex-1 font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold sm:mb-4">
+          <div className="mx-4 flexBetween xs:mx-0 minlg:mx-8 sm:flex-col sm:items-start">
+            <h1 className="flex-1 text-2xl font-semibold font-poppins dark:text-white text-nft-black-1 minlg:text-4xl sm:mb-4">
               Top Fundraisers
             </h1>
 
-            <div className="flex-2 sm:w-full flex flex-row sm:flex-col">
+            <div className="flex flex-row flex-2 sm:w-full sm:flex-col">
               <SearchBar
                 activeSelect={activeSelect}
                 setActiveSelect={setActiveSelect}
@@ -69,7 +69,7 @@ const Home = () => {
               />
             </div>
           </div>
-          <div className="mt-4 w-full flex flex-wrap justify-start md:justify-center">
+          <div className="flex flex-wrap justify-start w-full mt-4 md:justify-center">
             {!isLoadingFundraiser ? (
               newFundraisers
                 ?.reverse()
@@ -83,30 +83,32 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {!isLoadingFundraiser && <div className="w-full justify-center items-center sm:p-2 p-0 flex mb-8">
-        <Link href="/fundraisers">
-          <Button
-            as="a"
-            backgroundColor="#3198FE"
-            border="1px solid #3198FE"
-            color="white"
-            _hover={{
-              backgroundColor: "#000",
-              border: "1px solid #3198FE",
-              color: "white",
-            }}
-            display="inline-flex"
-            alignItems="center"
-            justifyContent="center"
-            w={{ base: "full", sm: "auto" }}
-            mb={{ base: 2, sm: 0 }}
-            size="lg"
-            cursor="pointer"
-          >
-            View more Fundraisers
-          </Button>
-        </Link>
-      </div>}
+      {!isLoadingFundraiser && (
+        <div className="flex items-center justify-center w-full p-0 mb-8 sm:p-2">
+          <Link href="/fundraisers">
+            <Button
+              as="a"
+              backgroundColor="#3198FE"
+              border="1px solid #3198FE"
+              color="white"
+              _hover={{
+                backgroundColor: "#000",
+                border: "1px solid #3198FE",
+                color: "white",
+              }}
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+              w={{ base: "full", sm: "auto" }}
+              mb={{ base: 2, sm: 0 }}
+              size="lg"
+              cursor="pointer"
+            >
+              View more Fundraisers
+            </Button>
+          </Link>
+        </div>
+      )}
       <Steps />
     </div>
   );
