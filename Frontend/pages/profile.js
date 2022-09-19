@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useContext } from "react";
-import { FundraiserContext } from "../context/FundraiserContext";
+import { AuthContext } from "../context/AuthContext";
 import { shortenAddress } from "../utils/shortenAddress";
 import images from "../assets";
 import {
@@ -24,7 +24,7 @@ import {
 } from "../components";
 
 export default function Home() {
-  const { currentAccount, connectWallet } = useContext(FundraiserContext);
+  const { currentAccount, connectWallet } = useContext(AuthContext);
 
   if (!currentAccount?.length > 0) {
     return (
@@ -45,7 +45,7 @@ export default function Home() {
           <Text fontSize="5xl" fontWeight="semiBold" color="white">
             Profile Page
           </Text>
-          <div className="flex justify-center items-center w-full">
+          <div className="flex items-center justify-center w-full">
             <Button
               btnName="Connect"
               btnType="primary"
@@ -63,31 +63,31 @@ export default function Home() {
       <Head>
         <title>Profile</title>
       </Head>
-      <div className="w-full flex justify-start items-center flex-col min-h-screen">
-        <div className="w-full flexCenter flex-col">
+      <div className="flex flex-col items-center justify-start w-full min-h-screen">
+        <div className="flex-col w-full flexCenter">
           <Banner
             name="Your Profile"
             childStyles="text-center mb-4"
             parentStyle="h-80 justify-center"
           />
 
-          <div className="flexCenter flex-col -mt-20 z-0">
-            <div className="flexCenter w-40 h-40 sm:w-36 sm:h-36 p-1 bg-nft-black-2 rounded-full">
+          <div className="z-0 flex-col -mt-20 flexCenter">
+            <div className="w-40 h-40 p-1 rounded-full flexCenter sm:w-36 sm:h-36 bg-nft-black-2">
               <Image
                 alt="creator"
                 src={images.creator1}
-                className="rounded-full object-cover"
+                className="object-cover rounded-full"
                 objectFit="cover"
               />
             </div>
-            <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl mt-6">
+            <p className="mt-6 text-2xl font-semibold font-poppins dark:text-white text-nft-black-1">
               {shortenAddress(currentAccount)}
             </p>
           </div>
         </div>
 
         <Flex
-          className="rounded-md mt-4 mb-4"
+          className="mt-4 mb-4 rounded-md"
           bgGradient="linear(to-br, teal.400, purple.700)"
           direction="column"
           width="90vw"
