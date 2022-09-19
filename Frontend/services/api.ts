@@ -48,7 +48,7 @@ export const fetchFundraisers = async (
       const amountInCELO = ethers.utils.formatEther(totalDonations.toString());
 
       // @ts-ignore TODO: fix typescript error
-      const dollarDonationAmount = amountInCELO * exchangeRate["USD"];
+      const dollarDonationAmount = amountInCELO * exchangeRate;
 
       return {
         name,
@@ -76,7 +76,7 @@ export const getProvider = async () => {
 
 export const getExchangeRate = async () => {
   const exchangeRate = await cc.price("CELO", ["USD"]);
-  return exchangeRate;
+  return exchangeRate["USD"];
 };
 
 export const renderDonationsList = async (donations: MyDonations) => {
@@ -99,7 +99,7 @@ export const renderDonationsList = async (donations: MyDonations) => {
       }
 
       const ethAmount = ethers.utils.formatEther(donation);
-      const userDonation = exchangeRate["USD"] * ethAmount;
+      const userDonation = exchangeRate * ethAmount;
 
       let donationDate;
       if (donations.dates[i] === undefined) {

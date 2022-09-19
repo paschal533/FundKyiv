@@ -37,7 +37,7 @@ export const handleNewFundraiser = () => {
 };
 
 // Donation toast
-export const handleDonation = (donationValue: number) => {
+export const handleDonation = (donationValue: string) => {
   toast({
     position: "top-left",
     title: "Donation",

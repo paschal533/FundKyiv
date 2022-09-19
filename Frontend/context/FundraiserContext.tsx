@@ -1,14 +1,8 @@
-import React, { useState } from "react";
-import { ethers } from "ethers";
-import {
-  handleConnect,
-  handleDonation,
-  handleNewFundraiser,
-  handleNotEnough,
-  handleWithdraw,
-} from "../services/notifications";
-import * as API from "../services/api";
-import { MyDonations } from "../types/interfaces";
+import React, { useState, useContext } from "react";
+import { handleNewFundraiser, handleWithdraw } from "@/services/notifications";
+import * as API from "@/services/api";
+import { MyDonations } from "@/types/interfaces";
+import { AuthContext } from "@/context/AuthContext";
 
 type Context = ReturnType<typeof useFundraiserProvider>;
 
@@ -30,14 +24,11 @@ export const FundraiserProvider = ({ children }: Props) => {
 
 const useFundraiserProvider = () => {
   const FundraiserCurrency = "CELO";
-  const [currentAccount, setCurrentAccount] = useState<null | string>(null);
+  const { currentAccount } = useContext(AuthContext);
   const [isLoadingFundraiser, setIsLoadingFundraiser] = useState(false);
-  const [donationValue, setDonationValue] = useState(0);
   const [owner, setIsOwner] = useState(false);
   const [userDonations, setUserDonations] = useState<MyDonations | null>(null);
-  const [exchangeRate, setExchangeRate] = useState(1);
-  const [successModal, setSuccessModal] = useState(false);
-  const [sending, setSending] = useState(false);
+
   const [loadDonations, setLoadDonations] = useState(true);
 
   // Get a fundraiser details
@@ -68,37 +59,6 @@ const useFundraiserProvider = () => {
     }
   };
 
-  // Donate to a fundraiser
-  const submitFunds = async (address: string) => {
-    try {
-      if (!currentAccount) {
-        return;
-      }
-
-      setSending(true);
-      const signer = await API.getProvider();
-
-      const instance = API.fetchFundraiserContract(address, signer);
-
-      const ethRate = await API.getExchangeRate();
-      const ethTotal = donationValue / ethRate;
-      const donation = ethers.utils.parseUnits(ethTotal.toString(), 18);
-
-      const tx = await instance.donate({
-        value: donation,
-        from: currentAccount,
-      });
-      setSending(false);
-      setSuccessModal(true);
-      handleDonation(donationValue);
-      console.log(tx);
-      // setDonationValue(0);
-    } catch (error) {
-      console.log(error);
-      handleNotEnough();
-    }
-  };
-
   // Create a fundraiser
   const createAFundraiser = async (
     name,
@@ -125,9 +85,6 @@ const useFundraiserProvider = () => {
     setIsLoadingFundraiser(false);
   };
 
-  // TODO: Use API.getExchangeRate call to get the exchange rate
-  const CELOAmount = (donationValue / exchangeRate || 0).toFixed(4);
-
   // withdraw funds
   const withdrawalFunds = async (address: string) => {
     if (!currentAccount) {
@@ -142,40 +99,15 @@ const useFundraiserProvider = () => {
     handleWithdraw();
   };
 
-  // Connect Wallet
-  const connectWallet = async () => {
-    const account = await API.connectWallet();
-
-    if (account) {
-      setCurrentAccount(account);
-      handleConnect();
-      // TODO: Fund a way to update the fundraiser when account is connected or changed
-      window.location.reload();
-    }
-  };
-
   return {
     userDonations,
-    setCurrentAccount,
     FundraiserCurrency,
     loadDonations,
     setLoadDonations,
     setIsOwner,
     withdrawalFunds,
-    setSending,
-    sending,
-    setSuccessModal,
-    successModal,
-    CELOAmount,
-    donationValue,
-    setDonationValue,
-    submitFunds,
     getFundRaiserDetails,
-
     createAFundraiser,
-
-    connectWallet,
-    currentAccount,
     owner,
     isLoadingFundraiser,
   };

@@ -1,4 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  MouseEvent,
+  useCallback,
+} from "react";
 import { Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,39 +13,71 @@ import { useTheme } from "next-themes";
 import { useRef } from "react";
 import Head from "next/head";
 
-import { FundraiserContext } from "../context/FundraiserContext";
-import { shortenAddress } from "../utils/shortenAddress";
-import { Button, Loader, Modal } from "../components";
-import images from "../assets";
+import { shortenAddress } from "@/utils/shortenAddress";
+import { FundraiserContext } from "@/context/FundraiserContext";
+import { AuthContext } from "@/context/AuthContext";
+import { Button, Loader, Modal } from "@/components";
+import images from "@/assets";
+import * as API from "@/services/api";
+import { handleDonation, handleNotEnough } from "@/services/notifications";
+import { ethers } from "ethers";
+
+interface Fundraiser {
+  address: string;
+  description: string;
+  dollarDonationAmount: string;
+  imageURL: string;
+  name: string;
+  website: string;
+}
 
 const AssetDetails = () => {
   const {
     owner,
-    setSending,
     setLoadDonations,
     loadDonations,
     withdrawalFunds,
     getFundRaiserDetails,
-    setSuccessModal,
-    sending,
-    successModal,
-    CELOAmount,
-    submitFunds,
-    donationValue,
     userDonations,
-    setDonationValue,
-    currentAccount,
-    connectWallet,
   } = useContext(FundraiserContext);
 
+  const [sending, setSending] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
+  const { connectWallet, currentAccount } = useContext(AuthContext);
+  const [isExchangedLoaded, setIsExchangedLoaded] = useState(false);
+  const [exchangeRate, setExchangeRate] = useState<number>(0);
+  const [donationValue, setDonationValue] = useState<string>("");
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadExchangeRate = async () => {
+      setIsExchangedLoaded(false);
+      const currentExchangeRate = await API.getExchangeRate();
+      if (!isMounted) {
+        return;
+      }
+      setExchangeRate(currentExchangeRate);
+      setIsExchangedLoaded(true);
+    };
+
+    loadExchangeRate();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const [paymentModal, setPaymentModal] = useState(false);
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>();
   const { theme } = useTheme();
   const router = useRouter();
 
   // check if it is clicked outside of modalRef
-  const handleClickOutside = (e) => {
-    if (modalRef?.current && !modalRef.current.contains(e.target)) {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (
+      modalRef?.current &&
+      !modalRef.current.contains(e.target as HTMLElement)
+    ) {
       setPaymentModal(false);
     }
   };
@@ -53,7 +91,8 @@ const AssetDetails = () => {
     }
   }, [paymentModal, successModal]);
 
-  const fundraiser = router.query;
+  // TODO: Should we use transaction hash instead of address?
+  const fundraiser = router.query as unknown as Fundraiser;
 
   useEffect(() => {
     const GetDonationList = async (address?: string) => {
@@ -73,6 +112,40 @@ const AssetDetails = () => {
 
     GetDonationList(fundraiser.address as string);
   }, [fundraiser.address, setLoadDonations]);
+
+  const CELOAmount = parseFloat(donationValue) / exchangeRate;
+
+  const submitFunds = useCallback(async () => {
+    try {
+      if (!currentAccount) {
+        return;
+      }
+
+      setSending(true);
+      const signer = await API.getProvider();
+      const instance = API.fetchFundraiserContract(fundraiser.address, signer);
+      await instance.donate({
+        value: ethers.utils.parseUnits(CELOAmount.toString(), 18),
+        from: currentAccount,
+      });
+
+      handleDonation(donationValue);
+      setSuccessModal(true);
+      setDonationValue("");
+    } catch (error) {
+      console.log(error);
+      handleNotEnough();
+    } finally {
+      setSending(false);
+    }
+  }, [
+    fundraiser.address,
+    donationValue,
+    CELOAmount,
+    currentAccount,
+    setSending,
+    setSuccessModal,
+  ]);
 
   if (!fundraiser.address) {
     return <Loader />;
@@ -134,13 +207,9 @@ const AssetDetails = () => {
               href={fundraiser.website}
               target="_blank"
               rel="noreferrer"
-              className="text-base font-normal font-poppins dark:text-white text-nft-black-1"
+              className="mx-2 text-base font-normal rounded-lg btn-outline font-poppins dark:text-white text-nft-black-1"
             >
-              <Button
-                btnName="Learn more..."
-                btnType="outline"
-                classStyles="mx-2 rounded-lg"
-              />
+              Learn more...
             </a>
           </div>
         </div>
@@ -279,8 +348,11 @@ const AssetDetails = () => {
                     <input
                       title="Donation amount"
                       type="number"
+                      min="1"
                       value={donationValue}
-                      onChange={(e) => setDonationValue(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setDonationValue(e.target.value)
+                      }
                       placeholder="Donation amount in USD"
                       className="flex-1 w-full bg-white outline-none dark:bg-nft-black-1 "
                     />
@@ -295,9 +367,14 @@ const AssetDetails = () => {
                   <p className="text-base font-semibold font-poppins dark:text-white text-nft-black-1 minlg:text-xl">
                     Total CELO:
                   </p>
-                  <p className="text-base font-normal font-poppins dark:text-white text-nft-black-1 minlg:text-xl">
-                    {CELOAmount} <span className="font-semibold">CELO</span>
-                  </p>
+                  {isExchangedLoaded ? (
+                    <p className="text-base font-normal font-poppins dark:text-white text-nft-black-1 minlg:text-xl">
+                      {isNaN(CELOAmount) ? 0 : CELOAmount.toFixed(4)}
+                      <span className="pl-1 font-semibold">CELO</span>
+                    </p>
+                  ) : (
+                    <Loader />
+                  )}
                 </div>
               </div>
             </div>
@@ -307,7 +384,9 @@ const AssetDetails = () => {
                   btnName="Donate"
                   btnType="primary"
                   classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
-                  handleClick={() => submitFunds(fundraiser.address)}
+                  handleClick={() =>
+                    submitFunds(fundraiser.address, donationValue)
+                  }
                 />
                 <Button
                   btnName="Cancel"
