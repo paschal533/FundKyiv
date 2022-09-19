@@ -64,24 +64,6 @@ export const fetchFundraisers = async (
   return items;
 };
 
-// Check if wallet is connected
-export const checkIfWalletIsConnect = async () => {
-  if (!window.ethereum) {
-    handleNewNotification();
-    return null;
-  }
-
-  const accounts = (await window.ethereum.request({
-    method: "eth_accounts",
-  })) as string[]; // TODO: fix provider type in global.d.ts
-
-  if (accounts?.length) {
-    return accounts[0];
-  } else {
-    return null;
-  }
-};
-
 export const getProvider = async () => {
   const web3Modal = new Web3Modal();
   const connection = await web3Modal.connect();

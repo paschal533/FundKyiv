@@ -7,10 +7,10 @@ interface Props {
 }
 
 const AuthLayout = ({ children }: Props) => {
-  const { isLoading, currentAccount } = useContext(AuthContext);
+  const { isLoading } = useContext(AuthContext);
 
   if (isLoading) {
-    // TODO: Show loading screen, temporarily to avoid sending not authenticated requests
+    // TODO: Show loading screen or use auth request close to the required components, temporarily to avoid sending not authenticated requests
     return null;
   }
 
