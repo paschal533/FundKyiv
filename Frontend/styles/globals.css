@@ -54,10 +54,6 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-.nav-h {
-  height: calc(100vh - 66px);
-}
-
 .blue-glassmorphism {
   background: rgb(39, 51, 89, 0.4);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
@@ -76,36 +72,6 @@
   scroll-behavior: smooth;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-.checkbox {
-  opacity: 0;
-  position: absolute;
-}
-
-.label {
-  transform: scale(1.5);
-}
-
-.ball {
-  top: 2px;
-  left: 2px;
-  transition: transform 0.2s linear;
-}
-
-/*  target the elemenent after the label*/
-.checkbox:checked + .label .ball {
-  transform: translateX(16px);
-}
-
-.fa-moon {
-  color: pink;
-  font-size: 9px;
-}
-
-.fa-sun {
-  color: yellow;
-  font-size: 9px;
 }
 
 .animated {
