@@ -5,6 +5,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import "./buttons.css"; */
+@layer components {
+  .btn-primary {
+    @apply nft-gradient text-sm minlg:text-lg py-2 px-6 minlg:py-4 minlg:px-8 font-poppins font-semibold text-white;
+  }
+
+  .btn-outline {
+    @apply border border-[#0a85ff] dark:text-white text-[#0a85ff] bg-transparent font-poppins font-semibold text-sm minlg:text-lg py-2 px-6 minlg:py-4 minlg:px-8;
+  }
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 7px;
