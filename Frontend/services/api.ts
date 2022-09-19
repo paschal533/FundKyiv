@@ -6,11 +6,7 @@ import {
   FundraiserFactory__factory,
   Fundraiser__factory,
 } from "../types/ethers-contracts";
-import {
-  handleNewBeneficiary,
-  handleNewNotification,
-  notifyMetamaskIsNotFounded,
-} from "./notifications";
+import { handleNewBeneficiary, handleNewNotification } from "./notifications";
 import { FundraiserItem, MyDonations } from "../types/interfaces";
 
 export const fetchContract = (
@@ -94,22 +90,6 @@ export const getProvider = async () => {
   const signer = provider.getSigner();
 
   return signer;
-};
-
-export const connectWallet = async () => {
-  if (!window.ethereum) {
-    return notifyMetamaskIsNotFounded();
-  }
-
-  const accounts = (await window.ethereum.request({
-    method: "eth_requestAccounts",
-  })) as string[]; // TODO: fix provider type in global.d.ts
-
-  if (accounts?.length) {
-    return accounts[0];
-  } else {
-    return null;
-  }
 };
 
 export const getExchangeRate = async () => {

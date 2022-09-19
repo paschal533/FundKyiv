@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import images from "../assets";
-import { FundraiserContext } from "../context/FundraiserContext";
 import Button from "./Button";
+import { AuthContext } from "@/context/AuthContext";
 
 const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
   const generateLink = (i) => {
@@ -50,7 +50,7 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
 };
 
 const ButtonGroup = ({ setActive, router, setIsOpen }) => {
-  const { connectWallet, currentAccount } = useContext(FundraiserContext);
+  const { connectWallet, currentAccount } = useContext(AuthContext);
 
   return currentAccount ? (
     <div className="flexCenter">
@@ -112,11 +112,11 @@ const Navbar = ({ color = "white" }) => {
   }, [isOpen]);
 
   return (
-    <nav className="flexBetween w-full fixed z-10 p-4 flex-row border-b dark:bg-nft-dark bg-white dark:border-nft-black-1 border-nft-gray-1">
-      <div className="flex flex-1 flex-row justify-start">
+    <nav className="fixed z-10 flex-row w-full p-4 bg-white border-b flexBetween dark:bg-nft-dark dark:border-nft-black-1 border-nft-gray-1">
+      <div className="flex flex-row justify-start flex-1">
         <Link href="/">
           <div
-            className="flexCenter md:hidden cursor-pointer"
+            className="cursor-pointer flexCenter md:hidden"
             onClick={() => setActive("Explore NFTs")}
           >
             <Image
@@ -126,7 +126,7 @@ const Navbar = ({ color = "white" }) => {
               height={32}
               alt="logo"
             />
-            <p className=" dark:text-white text-nft-black-1 font-semibold text-lg ml-1">
+            <p className="ml-1 text-lg font-semibold dark:text-white text-nft-black-1">
               Fundkyiv
             </p>
           </div>
@@ -150,7 +150,7 @@ const Navbar = ({ color = "white" }) => {
         </Link>
       </div>
 
-      <div className="flex flex-initial flex-row justify-end">
+      <div className="flex flex-row justify-end flex-initial">
         <div className="flex items-center mr-2">
           <input
             type="checkbox"
@@ -160,16 +160,16 @@ const Navbar = ({ color = "white" }) => {
           />
           <label
             htmlFor="checkbox"
-            className="flexBetween w-8 h-4 bg-black rounded-2xl p-1 relative label"
+            className="relative w-8 h-4 p-1 bg-black flexBetween rounded-2xl label"
           >
             <i className="fas fa-sun" />
             <i className="fas fa-moon" />
-            <div className="w-3 h-3 absolute bg-white rounded-full ball" />
+            <div className="absolute w-3 h-3 bg-white rounded-full ball" />
           </label>
         </div>
 
-        <div className="md:hidden flex">
-          <ul className="list-none flexCenter flex-row">
+        <div className="flex md:hidden">
+          <ul className="flex-row list-none flexCenter">
             <MenuItems active={active} setActive={setActive} />
           </ul>
           <div className="ml-4">
@@ -182,7 +182,7 @@ const Navbar = ({ color = "white" }) => {
         </div>
       </div>
 
-      <div className="hidden md:flex ml-2">
+      <div className="hidden ml-2 md:flex">
         {!isOpen ? (
           <Image
             src={images.menu}
@@ -206,7 +206,7 @@ const Navbar = ({ color = "white" }) => {
         )}
 
         {isOpen && (
-          <div className="fixed inset-0 top-65 dark:bg-nft-dark bg-white z-10 nav-h flex justify-between flex-col">
+          <div className="fixed inset-0 z-10 flex flex-col justify-between bg-white top-65 dark:bg-nft-dark nav-h">
             <div className="flex-1 p-4">
               <MenuItems
                 active={active}
