@@ -5,22 +5,21 @@ import Button from "./Button";
 const FundraiserCard = ({ fundraiser }) => {
   return (
     <Link href={{ pathname: "/fundraiser-details", query: fundraiser }}>
-      <div className="flex-1 min-w-215 max-w-max xs:max-w-none sm:w-full sm:min-w-155 minmd:min-w-256 minlg:min-w-327 dark:bg-nft-black-3 bg-white rounded-2xl p-4 m-2 minlg:m-8 sm:my-2 sm:mx-2 cursor-pointer shadow-md">
-        <div className="relative sm:w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl overflow-hidden">
+      <div className="flex-1 p-4 m-2 bg-white shadow-md cursor-pointer min-w-215 max-w-max xs:max-w-none sm:w-full sm:min-w-155 minmd:min-w-256 minlg:min-w-327 dark:bg-nft-black-3 rounded-2xl minlg:m-8 sm:my-2 sm:mx-2">
+        <div className="relative overflow-hidden sm:w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl">
           <Image
             src={fundraiser?.imageURL}
             layout="fill"
             objectFit="cover"
             alt="nft01"
-            width={100}
-            height={100}
+            priority
           />
         </div>
-        <div className="mt-3 flex flex-col">
-          <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-bold minlg:text-xl">
+        <div className="flex flex-col mt-3">
+          <p className="font-semibold font-poppins dark:text-white text-nft-black-1 text-bold minlg:text-xl">
             {fundraiser?.name}
           </p>
-          <div className="flexBetween mt-1 minlg:mt-3 flex-row xs:flex-col xs:items-start xs:mt-3">
+          <div className="flex-row mt-1 flexBetween minlg:mt-3 xs:flex-col xs:items-start xs:mt-3">
             <p className="font-poppins w-[300px] sm:w-full mt-2 dark:text-white text-nft-black-1 font-semibold text-xs minlg:text-lg">
               <span className="font-normal">
                 {" "}
@@ -29,10 +28,10 @@ const FundraiserCard = ({ fundraiser }) => {
             </p>
           </div>
           <div className="flex justify-between">
-            <p className="font-poppins mt-2 dark:text-white text-nft-black-1 font-semibold text-bold minlg:text-lg">
+            <p className="mt-2 font-semibold font-poppins dark:text-white text-nft-black-1 text-bold minlg:text-lg">
               Total donations:{" "}
             </p>
-            <p className="font-poppins mt-2 dark:text-white text-nft-black-1 font-semibold text-bold minlg:text-lg">
+            <p className="mt-2 font-semibold font-poppins dark:text-white text-nft-black-1 text-bold minlg:text-lg">
               $ {fundraiser?.dollarDonationAmount.toFixed(2)}
             </p>
           </div>
@@ -43,7 +42,7 @@ const FundraiserCard = ({ fundraiser }) => {
               classStyles="rounded-md"
             />
           </div>
-          <div className="mt-1 minlg:mt-3 flexBetween flex-row" />
+          <div className="flex-row mt-1 minlg:mt-3 flexBetween" />
         </div>
       </div>
     </Link>

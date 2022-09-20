@@ -4,12 +4,19 @@ import { useTheme } from "next-themes";
 
 import images from "../assets";
 
+interface Props {
+  activeSelect: string;
+  setActiveSelect: (value: string) => void;
+  handleSearch: (value: string) => void;
+  clearSearch: () => void;
+}
+
 const SearchBar = ({
   activeSelect,
   setActiveSelect,
   handleSearch,
   clearSearch,
-}) => {
+}: Props) => {
   const [search, setSearch] = useState("");
   const [toggle, setToggle] = useState(false);
   const [debouncedSearch, setDebouncedSearch] = useState(search);
@@ -31,7 +38,7 @@ const SearchBar = ({
 
   return (
     <>
-      <div className="flex-1 flexCenter dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-gray-2 py-3 px-4 rounded-md">
+      <div className="flex-1 px-4 py-3 bg-white border rounded-md flexCenter dark:bg-nft-black-2 dark:border-nft-black-2 border-nft-gray-2">
         <Image
           src={images.search}
           objectFit="contain"
@@ -43,7 +50,7 @@ const SearchBar = ({
         <input
           type="text"
           placeholder="Search item here"
-          className="dark:bg-nft-black-2 bg-white mx-4 w-full font-poppins dark:text-white text-nft-black-1 font-normal text-xs outline-none"
+          className="w-full mx-4 text-xs font-normal bg-white outline-none dark:bg-nft-black-2 font-poppins dark:text-white text-nft-black-1"
           onChange={(e) => setDebouncedSearch(e.target.value)}
           value={debouncedSearch}
         />
@@ -51,9 +58,9 @@ const SearchBar = ({
 
       <div
         onClick={() => setToggle(!toggle)}
-        className="relative flexBetween ml-4 sm:ml-0 sm:mt-2 min-w-190 cursor-pointer dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-gray-2 py-3 px-4 rounded-md"
+        className="relative px-4 py-3 ml-4 bg-white border rounded-md cursor-pointer flexBetween sm:ml-0 sm:mt-2 min-w-190 dark:bg-nft-black-2 dark:border-nft-black-2 border-nft-gray-2"
       >
-        <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-xs">
+        <p className="text-xs font-normal font-poppins dark:text-white text-nft-black-1">
           {activeSelect}
         </p>
         <Image
@@ -66,14 +73,14 @@ const SearchBar = ({
         />
 
         {toggle && (
-          <div className="absolute top-full left-0 right-0 w-full mt-3 z-10 dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-gray-2 py-3 px-4 rounded-md">
+          <div className="absolute left-0 right-0 z-10 w-full px-4 py-3 mt-3 bg-white border rounded-md top-full dark:bg-nft-black-2 dark:border-nft-black-2 border-nft-gray-2">
             {[
               "Recently added",
               "Price (low to high)",
               "Price (high to low)",
             ].map((item) => (
               <p
-                className="font-poppins dark:text-white text-nft-black-1 font-normal text-xs my-3 cursor-pointer"
+                className="my-3 text-xs font-normal cursor-pointer font-poppins dark:text-white text-nft-black-1"
                 onClick={() => setActiveSelect(item)}
                 key={item}
               >

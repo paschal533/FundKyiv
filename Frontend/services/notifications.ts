@@ -37,7 +37,7 @@ export const handleNewFundraiser = () => {
 };
 
 // Donation toast
-export const handleDonation = (donationValue: number) => {
+export const handleDonation = (donationValue: string) => {
   toast({
     position: "top-left",
     title: "Donation",
@@ -78,6 +78,17 @@ export const handleNotEnough = () => {
     position: "top-left",
     title: "Not enough fund",
     description: "Sorry you do not have enough fund to make this transaction",
+    status: "error",
+    duration: 9000,
+    isClosable: true,
+  });
+};
+
+export const notifyMetamaskIsNotFounded = () => {
+  toast({
+    position: "top-left",
+    title: "Can't find Metamask",
+    description: "Please install MetaMask.",
     status: "error",
     duration: 9000,
     isClosable: true,

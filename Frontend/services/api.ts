@@ -1,14 +1,13 @@
 import Web3Modal from "web3modal";
 import { ethers, providers } from "ethers";
 import cc from "cryptocompare";
-
 import { FundraiserFactoryAddress } from "../context/constants";
 import {
   FundraiserFactory__factory,
   Fundraiser__factory,
 } from "../types/ethers-contracts";
-import { handleNewNotification } from "./notifications";
-import { MyDonations } from "../types/interfaces";
+import { handleNewBeneficiary, handleNewNotification } from "./notifications";
+import { FundraiserItem, MyDonations } from "../types/interfaces";
 
 export const fetchContract = (
   signerOrProvider: ethers.Signer | ethers.providers.Provider
@@ -23,7 +22,10 @@ export const fetchFundraiserContract = (
   signerOrProvider: ethers.Signer | ethers.providers.Provider
 ) => Fundraiser__factory.connect(fundraiserAddress, signerOrProvider);
 
-export const fetchFundraisers = async (limit = 10, offset = 0) => {
+export const fetchFundraisers = async (
+  limit = 10,
+  offset = 0
+): Promise<FundraiserItem[]> => {
   const provider = new providers.JsonRpcProvider(
     "https://alfajores-forno.celo-testnet.org"
   );
@@ -46,10 +48,9 @@ export const fetchFundraisers = async (limit = 10, offset = 0) => {
       const amountInCELO = ethers.utils.formatEther(totalDonations.toString());
 
       // @ts-ignore TODO: fix typescript error
-      const dollarDonationAmount = amountInCELO * exchangeRate["USD"];
+      const dollarDonationAmount = amountInCELO * exchangeRate;
 
       return {
-        exchangeRate,
         name,
         description,
         dollarDonationAmount,
@@ -63,24 +64,6 @@ export const fetchFundraisers = async (limit = 10, offset = 0) => {
   return items;
 };
 
-// Check if wallet is connected
-export const checkIfWalletIsConnect = async () => {
-  if (!window.ethereum) {
-    handleNewNotification();
-    return null;
-  }
-
-  const accounts = (await window.ethereum.request({
-    method: "eth_accounts",
-  })) as string[]; // TODO: fix provider type in global.d.ts
-
-  if (accounts?.length) {
-    return accounts[0];
-  } else {
-    return null;
-  }
-};
-
 export const getProvider = async () => {
   const web3Modal = new Web3Modal();
   const connection = await web3Modal.connect();
@@ -91,24 +74,9 @@ export const getProvider = async () => {
   return signer;
 };
 
-export const connectWallet = async () => {
-  // TODO: Show notification instead of alert
-  if (!window.ethereum) return alert("Please install MetaMask.");
-
-  const accounts = (await window.ethereum.request({
-    method: "eth_requestAccounts",
-  })) as string[]; // TODO: fix provider type in global.d.ts
-
-  if (accounts?.length) {
-    return accounts[0];
-  } else {
-    return null;
-  }
-};
-
 export const getExchangeRate = async () => {
   const exchangeRate = await cc.price("CELO", ["USD"]);
-  return exchangeRate;
+  return exchangeRate["USD"];
 };
 
 export const renderDonationsList = async (donations: MyDonations) => {
@@ -124,9 +92,14 @@ export const renderDonationsList = async (donations: MyDonations) => {
     const donationList = [];
 
     for (let i = 0; i < totalDonations; i++) {
-      const ethAmount = ethers.utils.formatEther(donations[i].toString());
+      const donation = donations[i].toString();
 
-      const userDonation = exchangeRate["USD"] * ethAmount;
+      if (!donation) {
+        continue;
+      }
+
+      const ethAmount = ethers.utils.formatEther(donation);
+      const userDonation = exchangeRate * ethAmount;
 
       let donationDate;
       if (donations.dates[i] === undefined) {
@@ -146,4 +119,21 @@ export const renderDonationsList = async (donations: MyDonations) => {
     console.error(error);
     return null;
   }
+};
+
+export const setBeneficiary = async (
+  beneficiary: string,
+  address: string,
+  currentAccount: string
+) => {
+  if (!currentAccount) {
+    return;
+  }
+
+  const signer = await getProvider();
+
+  const instance = fetchFundraiserContract(address, signer);
+  await instance.setBeneficiary(beneficiary, { from: currentAccount });
+
+  handleNewBeneficiary();
 };

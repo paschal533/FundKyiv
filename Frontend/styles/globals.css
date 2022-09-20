@@ -5,6 +5,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import "./buttons.css"; */
+@layer components {
+  .btn-primary {
+    @apply nft-gradient text-sm minlg:text-lg py-2 px-6 minlg:py-4 minlg:px-8 font-poppins font-semibold text-white;
+  }
+
+  .btn-outline {
+    @apply border border-[#0a85ff] dark:text-white text-[#0a85ff] bg-transparent font-poppins font-semibold text-sm minlg:text-lg py-2 px-6 minlg:py-4 minlg:px-8;
+  }
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 7px;
@@ -43,10 +54,6 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-.nav-h {
-  height: calc(100vh - 66px);
-}
-
 .blue-glassmorphism {
   background: rgb(39, 51, 89, 0.4);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
@@ -65,36 +72,6 @@
   scroll-behavior: smooth;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-.checkbox {
-  opacity: 0;
-  position: absolute;
-}
-
-.label {
-  transform: scale(1.5);
-}
-
-.ball {
-  top: 2px;
-  left: 2px;
-  transition: transform 0.2s linear;
-}
-
-/*  target the elemenent after the label*/
-.checkbox:checked + .label .ball {
-  transform: translateX(16px);
-}
-
-.fa-moon {
-  color: pink;
-  font-size: 9px;
-}
-
-.fa-sun {
-  color: yellow;
-  font-size: 9px;
 }
 
 .animated {
