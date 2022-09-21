@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-import { FundraiserContext } from "../context/FundraiserContext";
+import { useEffect, useState } from "react";
+import useFundraiserItems from "@/hooks/useFundraisers";
 import { SearchBar, FundraiserCard, Loader } from "../components";
 import Head from "next/head";
 
 const Fundraisers = () => {
-  const { fundraisers, isLoadingFundraiser } = useContext(FundraiserContext);
+  const { fundraisers, isLoadingFundraiser } = useFundraiserItems();
   const [activeSelect, setActiveSelect] = useState("Recently Added");
   const [newFundraisers, setFundraisers] = useState(fundraisers);
   const [fundraisersCopy, setFundraisersCopy] = useState(fundraisers);
@@ -27,7 +27,7 @@ const Fundraisers = () => {
   };
 
   const onClearSearch = () => {
-    if (newFundraisers.length && fundraisersCopy.length) {
+    if (newFundraisers?.length && fundraisersCopy?.length) {
       setFundraisers(fundraisersCopy);
     }
   };
