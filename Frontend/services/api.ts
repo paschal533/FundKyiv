@@ -1,13 +1,13 @@
 import Web3Modal from "web3modal";
 import { ethers, providers } from "ethers";
 import cc from "cryptocompare";
-import { FundraiserFactoryAddress } from "../context/constants";
+import { FundraiserFactoryAddress } from "@/config";
 import {
   FundraiserFactory__factory,
   Fundraiser__factory,
-} from "../types/ethers-contracts";
-import { handleNewBeneficiary, handleNewNotification } from "./notifications";
-import { FundraiserItem, MyDonations } from "../types/interfaces";
+} from "@/types/ethers-contracts";
+import { handleNewBeneficiary } from "@/services/notifications";
+import { FundraiserItem, MyDonations } from "@/types";
 
 export const fetchContract = (
   signerOrProvider: ethers.Signer | ethers.providers.Provider

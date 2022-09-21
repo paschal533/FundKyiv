@@ -2,15 +2,23 @@ import { useRef } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
-import images from "../assets";
+import images from "@/assets";
 
-const Modal = ({ header, body, footer, handleClose }) => {
-  const modalRef = useRef(null);
+interface Props {
+  header: string;
+  body: React.ReactNode;
+  footer: React.ReactNode;
+  handleClose: () => void;
+}
+
+const Modal = ({ header, body, footer, handleClose }: Props) => {
+  const modalRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
-  // check if it is cliked outside of modalRef
-  const handleClickOutside = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
+  // TODO: Make reusable by moving to the hooks, maybe https://usehooks-ts.com/react-hook/use-on-click-outside
+  // check if it is clicked outside of modalRef
+  const handleClickOutside = (e: React.SyntheticEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       handleClose();
     }
   };

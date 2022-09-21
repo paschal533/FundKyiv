@@ -14,25 +14,29 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ethers } from "ethers";
-import CustomContainer from "./CustomContainer";
+import CustomContainer from "@/components/CustomContainer";
+import { Address } from "@/types";
+import { notifyCELOSent } from "../services/notifications";
 
-export default function Send({ user }) {
-  const [amount, setAmount] = useState(0);
+interface Props {
+  user: Address;
+}
+
+const Send = ({ user }: Props) => {
+  const [amount, setAmount] = useState("0");
   const [receiver, setReceiver] = useState("");
   const [sending, setSending] = useState(false);
-  const { ethereum } = window;
 
-  const handleChange = (value) => setAmount(value);
+  const handleChange = (value: string) => setAmount(value);
 
-  const toast = useToast();
-
-  const sendCELO = async (e) => {
-    if (!amount || !receiver) return;
+  const sendCELO = async (e: React.SyntheticEvent) => {
+    if (amount === "0" || !receiver) return;
     e.preventDefault();
-    const parsedAmount = ethers.utils.parseEther(amount);
-    setSending(true);
+
     try {
-      await ethereum.request({
+      const parsedAmount = ethers.utils.parseEther(amount);
+      setSending(true);
+      await window.ethereum.request({
         method: "eth_sendTransaction",
         params: [
           {
@@ -43,18 +47,10 @@ export default function Send({ user }) {
           },
         ],
       });
-      toast({
-        position: "top-left",
-        title: "CELO successfully sent.",
-        description: "Fresh CELO are showing up into the wallet.",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      setReceiver("");
-      setSending(false);
+      notifyCELOSent();
     } catch (error) {
       console.log(error);
+    } finally {
       setReceiver("");
       setSending(false);
     }
@@ -77,7 +73,7 @@ export default function Send({ user }) {
           <Text fontSize="xl" fontWeight="bold">
             Send CELO
           </Text>
-          <form onSubmit={(e) => sendCELO(e)}>
+          <form onSubmit={sendCELO}>
             <FormControl mt="4">
               <FormLabel htmlFor="amount">Amount of CELO</FormLabel>
               <NumberInput step={0.1} onChange={handleChange}>
@@ -104,4 +100,6 @@ export default function Send({ user }) {
       )}
     </CustomContainer>
   );
-}
+};
+
+export default Send;

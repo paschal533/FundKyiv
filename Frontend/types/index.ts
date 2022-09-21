@@ -6,11 +6,13 @@ export type MyDonations = [ethers.BigNumber[], ethers.BigNumber[]] & {
   dates: ethers.BigNumber[];
 };
 
+export type Address = string;
+
 export interface FundraiserItem {
   name: string;
   description: string;
   dollarDonationAmount: number;
   website: string;
   imageURL: string;
-  address: string;
+  address: Address;
 }

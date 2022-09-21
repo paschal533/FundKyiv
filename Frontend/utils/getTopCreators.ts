@@ -1,3 +1,4 @@
+// TODO: it's not in used should be removed?
 export const getCreators = (array) => {
   const finalized = [];
 

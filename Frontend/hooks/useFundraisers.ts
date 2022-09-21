@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FundraiserItem } from "@/types/interfaces";
+import { FundraiserItem } from "@/types";
 import * as API from "@/services/api";
 
 const useFundraisers = () => {
