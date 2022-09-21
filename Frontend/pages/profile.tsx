@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { shortenAddress } from "../utils/shortenAddress";
-import images from "../assets";
+import { AuthContext } from "@/context/AuthContext";
+import { shortenAddress } from "@/utils/shortenAddress";
+import images from "@/assets";
 import {
   Box,
   Flex,
@@ -21,12 +21,12 @@ import {
   Send,
   Button,
   Banner,
-} from "../components";
+} from "@/components";
 
-export default function Home() {
+const Home = () => {
   const { currentAccount, connectWallet } = useContext(AuthContext);
 
-  if (!currentAccount?.length > 0) {
+  if (!currentAccount) {
     return (
       <>
         <Head>
@@ -135,4 +135,6 @@ export default function Home() {
       </div>
     </>
   );
-}
+};
+
+export default Home;

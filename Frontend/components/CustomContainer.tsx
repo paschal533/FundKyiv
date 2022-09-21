@@ -1,6 +1,10 @@
 import { Box } from "@chakra-ui/react";
 
-export default function CustomContainer({ children }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+const CustomContainer = ({ children }: Props) => {
   return (
     <Box
       bg="white"
@@ -15,4 +19,6 @@ export default function CustomContainer({ children }) {
       {children}
     </Box>
   );
-}
+};
+
+export default CustomContainer;

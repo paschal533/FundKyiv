@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import images from "../assets";
-import Logo from "./Logo";
-import ThemeSwitcher from "./ThemeSwitcher";
-import NavMenu from "./NavMenu";
-import NavButtonGroup from "./NavButtonGroup";
+import images from "@/assets";
+import Logo from "@/components/Logo";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import NavMenu from "@/components/NavMenu";
+import NavButtonGroup from "@/components/NavButtonGroup";
 
 const Navbar = () => {
   const { theme } = useTheme();

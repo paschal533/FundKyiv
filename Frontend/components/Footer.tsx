@@ -1,17 +1,24 @@
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
-import images from "../assets";
-import Button from "./Button";
+import images from "@/assets";
+import Button from "@/components/Button";
 
-const FooterLinks = ({ heading, items, extraClasses }) => (
+interface Props {
+  heading: string;
+  items: string[];
+  extraClasses?: string;
+}
+
+// TODO: Move to a separate file and create a links for each item
+const FooterLinks = ({ heading, items, extraClasses }: Props) => (
   <div className={`flex-1 justify-start items-start ${extraClasses}`}>
     <h3 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl mb-10">
       {heading}
     </h3>
     {items.map((item, index) => (
       <p
-        key={item + index}
+        key={index}
         className="font-poppins dark:text-white text-nft-black-1 font-normal text-base cursor-pointer dark:hover:text-nft-gray-1 hover:text-nft-black-1 my-3"
       >
         {item}
@@ -88,7 +95,7 @@ const Footer = () => {
               images.telegram,
               images.discord,
             ].map((image, index) => (
-              <div className="mx-2 cursor-pointer" key={`image ${index}`}>
+              <div className="mx-2 cursor-pointer" key={index}>
                 <Image
                   src={image}
                   key={index}

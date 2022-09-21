@@ -94,3 +94,14 @@ export const notifyMetamaskIsNotFounded = () => {
     isClosable: true,
   });
 };
+
+export const notifyCELOSent = () => {
+  toast({
+    position: "top-left",
+    title: "CELO successfully sent.",
+    description: "Fresh CELO are showing up into the wallet.",
+    status: "success",
+    duration: 9000,
+    isClosable: true,
+  });
+};

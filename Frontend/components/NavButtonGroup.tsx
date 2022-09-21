@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Link from "next/link";
-import Button from "./Button";
+import Button from "@/components/Button";
 import { AuthContext } from "@/context/AuthContext";
 
 const NavButtonGroup = () => {

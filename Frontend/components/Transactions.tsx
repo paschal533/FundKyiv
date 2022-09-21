@@ -1,8 +1,14 @@
-import { Divider, Link, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Address } from "../types";
 import CustomContainer from "./CustomContainer";
 
-export default function Transactions({ user }) {
+interface Props {
+  user: Address;
+}
+
+// TODO: Is it the same component we use for fundraiser-details page?
+export default function Transactions({ user }: Props) {
   const [transactions, setTransactions] = useState();
 
   useEffect(() => {

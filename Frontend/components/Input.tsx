@@ -1,8 +1,24 @@
 import { useContext } from "react";
+import { FundraiserContext } from "@/context/FundraiserContext";
 
-import { FundraiserContext } from "../context/FundraiserContext";
+interface Props {
+  children: React.ReactNode;
+  inputType: string;
+  title: string;
+  placeholder: string;
+  value: string;
+  handleClick?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+}
 
-const Input = ({ inputType, title, placeholder, handleClick, value }) => {
+const Input = ({
+  inputType,
+  title,
+  placeholder,
+  handleClick,
+  value,
+}: Props) => {
   const { FundraiserCurrency } = useContext(FundraiserContext);
 
   return (

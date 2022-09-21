@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { handleNewFundraiser, handleWithdraw } from "@/services/notifications";
 import * as API from "@/services/api";
-import { MyDonations } from "@/types/interfaces";
+import { MyDonations } from "@/types";
 import { AuthContext } from "@/context/AuthContext";
 
 type Context = ReturnType<typeof useFundraiserProvider>;

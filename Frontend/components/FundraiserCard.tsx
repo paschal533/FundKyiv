@@ -1,10 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import Button from "./Button";
+import Button from "@/components/Button";
+import { FundraiserItem } from "@/types";
 
-const FundraiserCard = ({ fundraiser }) => {
+interface Props {
+  fundraiser: FundraiserItem;
+}
+
+const FundraiserCard = ({ fundraiser }: Props) => {
   return (
-    <Link href={{ pathname: "/fundraiser-details", query: fundraiser }}>
+    <Link
+      href={{
+        pathname: "/fundraiser-details",
+        query: { ...fundraiser },
+      }}
+    >
       <div className="flex-1 p-4 m-2 bg-white shadow-md cursor-pointer min-w-215 max-w-max xs:max-w-none sm:w-full sm:min-w-155 minmd:min-w-256 minlg:min-w-327 dark:bg-nft-black-3 rounded-2xl minlg:m-8 sm:my-2 sm:mx-2">
         <div className="relative overflow-hidden sm:w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl">
           <Image
