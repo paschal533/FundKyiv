@@ -8,6 +8,6 @@ module.exports = {
   // @link https://reactjs.org/blog/2022/03/29/react-v18.html#new-strict-mode-behaviors
   reactStrictMode: false,
   images: {
-    domains: ["fundmatic.infura-ipfs.io"],
+    domains: ["fundmatic.infura-ipfs.io", "openseauserdata.com"],
   },
 };

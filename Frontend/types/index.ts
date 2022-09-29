@@ -16,3 +16,10 @@ export interface FundraiserItem {
   imageURL: string;
   address: Address;
 }
+
+export interface FundraiserDetailsItem {
+  name: string;
+  dollarDonationAmount: number;
+  address: Address;
+  userDonations: [];
+}
