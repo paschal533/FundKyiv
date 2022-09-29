@@ -109,7 +109,7 @@ const CreateItem = () => {
         <Tabs size='lg'>
           <TabList>
             <Tab className="text-white" _selected={{ color: 'white', bg: 'blue.500', borderRadius: "5px" }} >Individual</Tab>
-            <Tab className="text-white" _selected={{ color: 'white', bg: 'blue.500', borderRadius: "5px" }}>Organisanition</Tab>
+            <Tab className="text-white" _selected={{ color: 'white', bg: 'blue.500', borderRadius: "5px" }}>Organisation</Tab>
           </TabList>
          
         <TabPanels>
