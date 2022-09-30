@@ -6,6 +6,7 @@ import { FundraiserProvider } from "@/context/FundraiserContext";
 import AuthLayout from "@/layouts/AuthLayout";
 import { ToastContainer } from "@/services/toast";
 import { AuthProvider } from "@/context/AuthContext";
+import { ProfileProvider } from "@/context/ProfileContext";
 
 import "@/styles/globals.css";
 
@@ -15,7 +16,9 @@ const App = ({ Component, pageProps }: AppProps) => (
       <AuthProvider>
         <FundraiserProvider>
           <AuthLayout>
-            <Component {...pageProps} />
+            <ProfileProvider>
+              <Component {...pageProps} />
+            </ProfileProvider>
           </AuthLayout>
           <ToastContainer />
           <Script

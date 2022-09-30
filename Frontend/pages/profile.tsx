@@ -6,13 +6,13 @@ import { shortenAddress } from "@/utils/shortenAddress";
 import images from "@/assets";
 import { Flex, Text } from "@chakra-ui/react";
 import { Button } from "@/components";
-import { FundraiserContext } from "../context/FundraiserContext";
+import { ProfileContext } from "@/context/ProfileContext";
 import Donations from "@/components/Donations";
 
 const Home = () => {
   const { currentAccount, connectWallet } = useContext(AuthContext);
   const { getTotalDonations, totalDonations, myDonations } =
-    useContext(FundraiserContext);
+    useContext(ProfileContext);
 
   useEffect(() => {
     if (myDonations) {

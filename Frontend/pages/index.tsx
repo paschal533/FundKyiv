@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { Button } from "@chakra-ui/react";
 import { Banner, SearchBar, FundraiserCard, Loader, Steps } from "@/components";
-import useFundraiserItems from "@/hooks/useFundraisers";
+import { FundraiserContext } from "@/context/FundraiserContext";
 
 const Home = () => {
-  const { fundraisers, isLoadingFundraiser } = useFundraiserItems();
+  const { fundraisers, isLoadingFundraiser } = useContext(FundraiserContext);
   const [activeSelect, setActiveSelect] = useState("Recently Added");
   const [searchValue, setSearchValue] = useState("");
 

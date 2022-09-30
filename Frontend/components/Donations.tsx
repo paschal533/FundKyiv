@@ -2,11 +2,11 @@ import { useContext } from "react";
 import Link from "next/link";
 import { Spinner } from "@chakra-ui/react";
 import { AuthContext } from "@/context/AuthContext";
-import { FundraiserContext } from "../context/FundraiserContext";
+import { ProfileContext } from "@/context/ProfileContext";
 
 const Donations = () => {
   const { totalDonations, isLoadingUserDonations, myDonations } =
-    useContext(FundraiserContext);
+    useContext(ProfileContext);
   const { currentAccount } = useContext(AuthContext);
   return (
     <div>
@@ -27,7 +27,7 @@ const Donations = () => {
                       key={index}
                       className="flex items-center justify-center w-full mt-4 text-center "
                     >
-                      <h1 className="text-md font-bold dark:text-white text-nft-black-1">
+                      <h1 className="text-md font-bold mt-4 dark:text-white text-nft-black-1">
                         {donation.name.slice(0, 18)}
                       </h1>
                       {donation.userDonations?.map(
@@ -37,21 +37,23 @@ const Donations = () => {
                               <p className="text-base font-normal dark:text-white text-nft-black-1">
                                 ${details.donationAmount}
                               </p>
-                              <Link
-                                className="donation-receipt-link"
-                                href={{
-                                  pathname: "/receipts",
-                                  query: {
-                                    fundraiser: donation.name,
-                                    donation: donation.dollarDonationAmount,
-                                    date: details.date,
-                                  },
-                                }}
-                              >
-                                <p className="px-6 py-2 ml-3 text-sm font-semibold text-white rounded-md nft-gradient minlg:text-lg minlg:py-4 minlg:px-8 font-poppins">
-                                  Request Receipt
-                                </p>
-                              </Link>
+                              <div className="cursor-pointer">
+                                <Link
+                                  className="donation-receipt-link"
+                                  href={{
+                                    pathname: "/receipts",
+                                    query: {
+                                      fundraiser: donation.name,
+                                      donation: donation.dollarDonationAmount,
+                                      date: details.date,
+                                    },
+                                  }}
+                                >
+                                  <p className="px-6 cursor-pointer py-2 ml-3 text-sm font-semibold text-white rounded-md nft-gradient minlg:text-lg minlg:py-4 minlg:px-8 font-poppins">
+                                    Request Receipt
+                                  </p>
+                                </Link>
+                              </div>
                             </div>
                           );
                         }

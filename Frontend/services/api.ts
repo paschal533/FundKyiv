@@ -9,7 +9,12 @@ import {
   Fundraiser__factory,
 } from "@/types/ethers-contracts";
 import { handleNewBeneficiary } from "@/services/notifications";
-import { FundraiserItem, MyDonations, FundraiserDetailsItem } from "@/types";
+import {
+  FundraiserItem,
+  MyDonations,
+  FundraiserDetailsItem,
+  Address,
+} from "@/types";
 
 export const fetchContract = (
   signerOrProvider: ethers.Signer | ethers.providers.Provider
@@ -67,9 +72,9 @@ export const fetchFundraisers = async (
 };
 
 export const fetchFundraisersDetails = async (
-  limit: any,
-  offset: any,
-  currentAccount: any
+  limit: number,
+  offset: number,
+  currentAccount: Address
 ): Promise<FundraiserDetailsItem[]> => {
   const provider = new providers.JsonRpcProvider(
     "https://alfajores-forno.celo-testnet.org"
