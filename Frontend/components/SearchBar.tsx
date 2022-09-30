@@ -74,11 +74,7 @@ const SearchBar = ({
 
         {toggle && (
           <div className="absolute left-0 right-0 z-10 w-full px-4 py-3 mt-3 bg-white border rounded-md top-full dark:bg-nft-black-2 dark:border-nft-black-2 border-nft-gray-2">
-            {[
-              "Recently added",
-              "Individual",
-              "Organisation",
-            ].map((item) => (
+            {["Recently added", "Individual", "Organisation"].map((item) => (
               <p
                 className="my-3 text-xs font-normal cursor-pointer font-poppins dark:text-white text-nft-black-1"
                 onClick={() => setActiveSelect(item)}

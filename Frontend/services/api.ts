@@ -18,7 +18,7 @@ export const fetchContract = (
     FundraiserFactoryAddress,
     signerOrProvider
   );
-   
+
 export const fetchFundraiserContract = (
   fundraiserAddress: string,
   signerOrProvider: ethers.Signer | ethers.providers.Provider
@@ -69,7 +69,7 @@ export const fetchFundraisers = async (
 export const fetchFundraisersDetails = async (
   limit: any,
   offset: any,
-  currentAccount : any
+  currentAccount: any
 ): Promise<FundraiserDetailsItem[]> => {
   const provider = new providers.JsonRpcProvider(
     "https://alfajores-forno.celo-testnet.org"
@@ -90,8 +90,8 @@ export const fetchFundraisersDetails = async (
       const amountInCELO = ethers.utils.formatEther(totalDonations.toString());
       const userDonation = await instance.myDonations({
         from: currentAccount,
-      })
-        
+      });
+
       const normalizedDonations = await renderDonationsList(userDonation);
       // @ts-ignore TODO: fix typescript error
       const dollarDonationAmount = amountInCELO * exchangeRate;
@@ -100,7 +100,7 @@ export const fetchFundraisersDetails = async (
         name,
         dollarDonationAmount,
         address: item,
-        userDonations : normalizedDonations,
+        userDonations: normalizedDonations,
       };
     })
   );

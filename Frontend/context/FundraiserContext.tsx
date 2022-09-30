@@ -3,6 +3,7 @@ import { handleNewFundraiser, handleWithdraw } from "@/services/notifications";
 import * as API from "@/services/api";
 import { MyDonations } from "@/types";
 import { AuthContext } from "@/context/AuthContext";
+import useProfile from "@/hooks/useProfile";
 
 type Context = ReturnType<typeof useFundraiserProvider>;
 
@@ -28,6 +29,8 @@ const useFundraiserProvider = () => {
   const [isLoadingFundraiser, setIsLoadingFundraiser] = useState(false);
   const [owner, setIsOwner] = useState(false);
   const [userDonations, setUserDonations] = useState<MyDonations | null>(null);
+  const { myDonations, isLoadingUserDonations } = useProfile();
+  const [totalDonations, setTotalDonations] = useState("");
 
   const [loadDonations, setLoadDonations] = useState(true);
 
@@ -99,6 +102,25 @@ const useFundraiserProvider = () => {
     handleWithdraw();
   };
 
+  const getTotalDonations = async () => {
+    const items = await Promise.all(
+      myDonations.map(async (item) => {
+        return item.userDonations;
+      })
+    );
+
+    const donations: any[] = [];
+
+    // @ts-ignore TODO: fix typescript error
+    items.map((item) => {
+      return item?.map((res) => donations.push(res.donationAmount));
+    });
+
+    setTotalDonations(
+      donations.reduce((a, b) => Number(a) + Number(b), 0).toFixed(2)
+    );
+  };
+
   return {
     userDonations,
     FundraiserCurrency,
@@ -110,5 +132,9 @@ const useFundraiserProvider = () => {
     createAFundraiser,
     owner,
     isLoadingFundraiser,
+    getTotalDonations,
+    totalDonations,
+    isLoadingUserDonations,
+    myDonations,
   };
 };
