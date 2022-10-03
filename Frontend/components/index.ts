@@ -7,10 +7,6 @@ import Loader from "./Loader";
 import FundraiserCard from "./FundraiserCard";
 import SearchBar from "./SearchBar";
 import Modal from "./Modal";
-import Profile from "./Profile";
-import Balance from "./Balance";
-import Send from "./Send";
-import Transactions from "./Transactions";
 import Steps from "./Steps";
 
 export {
@@ -23,9 +19,5 @@ export {
   FundraiserCard,
   SearchBar,
   Modal,
-  Send,
-  Profile,
-  Transactions,
-  Balance,
   Steps,
 };

@@ -50,15 +50,19 @@ const Fundraisers = () => {
           </div>
         </div>
         <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
-          {!isLoadingFundraiser ? (
-            newFundraisers
-              ?.reverse()
-              .map((fundraiser, index) => (
-                <FundraiserCard key={index} fundraiser={fundraiser} />
-              ))
-          ) : (
-            <Loader />
-          )}
+          {!isLoadingFundraiser
+            ? newFundraisers
+                ?.reverse()
+                .map((fundraiser, index) => (
+                  <FundraiserCard key={index} fundraiser={fundraiser} />
+                ))
+            : [1, 2, 3, 4].map((fundraiser, index) => (
+                <FundraiserCard
+                  key={index}
+                  fundraiser={fundraiser}
+                  isLoadingFundraiser={isLoadingFundraiser}
+                />
+              ))}
         </div>
       </div>
     </div>

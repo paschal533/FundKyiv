@@ -48,15 +48,26 @@ const Home = () => {
             </div>
           </div>
           <div className="flex flex-wrap justify-start w-full mt-4 md:justify-center">
-            {!isLoadingFundraiser ? (
-              fundraisers
-                .filter(({ name }) => name.toLowerCase().includes(searchValue))
-                .map((fundraiser, index) => (
-                  <FundraiserCard key={index} fundraiser={fundraiser} />
-                ))
-            ) : (
-              <Loader />
-            )}
+            {!isLoadingFundraiser
+              ? fundraisers
+                  .filter(({ name }) =>
+                    name.toLowerCase().includes(searchValue)
+                  )
+                  .slice(0, 4)
+                  .map((fundraiser, index) => (
+                    <FundraiserCard
+                      key={index}
+                      fundraiser={fundraiser}
+                      isLoadingFundraiser={isLoadingFundraiser}
+                    />
+                  ))
+              : [1, 2, 3, 4].map((fundraiser, index) => (
+                  <FundraiserCard
+                    key={index}
+                    fundraiser={fundraiser}
+                    isLoadingFundraiser={isLoadingFundraiser}
+                  />
+                ))}
           </div>
         </div>
       </div>
