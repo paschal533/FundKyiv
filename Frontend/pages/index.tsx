@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { Button } from "@chakra-ui/react";
-import { Banner, SearchBar, FundraiserCard, Loader, Steps } from "@/components";
+import { Banner, SearchBar, FundraiserCard, Steps } from "@/components";
 import { FundraiserContext } from "@/context/FundraiserContext";
 
 const Home = () => {
@@ -48,26 +48,15 @@ const Home = () => {
             </div>
           </div>
           <div className="flex flex-wrap justify-start w-full mt-4 md:justify-center">
-            {!isLoadingFundraiser
-              ? fundraisers
-                  .filter(({ name }) =>
-                    name.toLowerCase().includes(searchValue)
-                  )
-                  .slice(0, 4)
-                  .map((fundraiser, index) => (
-                    <FundraiserCard
-                      key={index}
-                      fundraiser={fundraiser}
-                      isLoadingFundraiser={isLoadingFundraiser}
-                    />
-                  ))
-              : [1, 2, 3, 4].map((fundraiser, index) => (
-                  <FundraiserCard
-                    key={index}
-                    fundraiser={fundraiser}
-                    isLoadingFundraiser={isLoadingFundraiser}
-                  />
-                ))}
+              {!isLoadingFundraiser ? fundraisers
+                .filter(({ name }) => name.toLowerCase().includes(searchValue))
+                .slice(0, 4)
+                .map((fundraiser, index) => (
+                  <FundraiserCard key={index} fundraiser={fundraiser} isLoadingFundraiser={isLoadingFundraiser}  />
+                )) : [1,2,3,4].map((fundraiser, index) => (
+                  <FundraiserCard key={index} fundraiser={fundraiser} isLoadingFundraiser={isLoadingFundraiser}  />
+                ))
+              }
           </div>
         </div>
       </div>

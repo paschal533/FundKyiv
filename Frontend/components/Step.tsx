@@ -2,7 +2,7 @@ import { Flex, Box, Text } from "@chakra-ui/react";
 
 interface Props {
   title: string;
-  step: string;
+  step: any;
   description: string;
 }
 

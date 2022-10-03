@@ -3,10 +3,11 @@ import { useTheme } from "next-themes";
 
 import images from "@/assets";
 import Button from "@/components/Button";
+import Link from "next/link";
 
 interface Props {
   heading: string;
-  items: string[];
+  items: Array[];
   extraClasses?: string;
 }
 
@@ -17,12 +18,14 @@ const FooterLinks = ({ heading, items, extraClasses }: Props) => (
       {heading}
     </h3>
     {items.map((item, index) => (
+      <Link href={item.link}>
       <p
         key={index}
         className="font-poppins dark:text-white text-nft-black-1 font-normal text-base cursor-pointer dark:hover:text-nft-gray-1 hover:text-nft-black-1 my-3"
       >
-        {item}
+        {item.name}
       </p>
+      </Link>
     ))}
   </div>
 );
@@ -68,15 +71,19 @@ const Footer = () => {
         <div className="flex-1 flexBetweenStart flex-wrap ml-10 md:ml-0 md:mt-8">
           <FooterLinks
             heading="FundBrave"
-            items={["Explore", "How it Works", "Contact Us"]}
+            items={[
+              {name : "Explore", link: "/"},
+              {name : "How it Works", link: "/how-it-works"},
+              {name : "Contact Us", link: "/contact-us"}
+            ]}
           />
           <FooterLinks
             heading="Support"
             items={[
-              "Help Center",
-              "Terms of service",
-              "Legal",
-              "Privacy policy",
+              {name: "Help Center", link: "/help-center"},
+              {name : "Terms of service", link: "/terms-of-service"},
+              {name: "Legal", link: "/legal"},
+              {name: "Privacy policy", link: "/privacy-policy"}
             ]}
             extraClasses="ml-4"
           />
@@ -90,14 +97,15 @@ const Footer = () => {
           </p>
           <div className="flex flex-row sm:mt-4">
             {[
-              images.instagram,
-              images.twitter,
-              images.telegram,
-              images.discord,
+              {image : images.instagram, link: " https://www.facebook.com/fundbrave" },
+              {image :  images.twitter, link: "https://twitter.com/fundbrave"},
+              {image :  images.telegram, link: "https://web.telegram.org/z/#5443610770"},
+              {image :  images.discord, link: "https://discord.com/channels/1021140908323905546/1021140908323905549"}
             ].map((image, index) => (
               <div className="mx-2 cursor-pointer" key={index}>
+                <a href={image.link} target="_blank">
                 <Image
-                  src={image}
+                  src={image.image}
                   key={index}
                   objectFit="contain"
                   width={24}
@@ -105,6 +113,7 @@ const Footer = () => {
                   alt="social"
                   className={theme === "light" ? "filter invert" : undefined}
                 />
+                </a>
               </div>
             ))}
           </div>
