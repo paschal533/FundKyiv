@@ -1,30 +1,24 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { shortenAddress } from "@/utils/shortenAddress";
 import images from "@/assets";
-import {
-  Box,
-  Flex,
-  TabList,
-  Tabs,
-  Text,
-  Tab,
-  TabPanels,
-  TabPanel,
-} from "@chakra-ui/react";
-import {
-  Profile,
-  Balance,
-  Transactions,
-  Send,
-  Button,
-  Banner,
-} from "@/components";
+import { Flex, Text } from "@chakra-ui/react";
+import { Button } from "@/components";
+import { ProfileContext } from "@/context/ProfileContext";
+import Donations from "@/components/Donations";
 
 const Home = () => {
   const { currentAccount, connectWallet } = useContext(AuthContext);
+  const { getTotalDonations, totalDonations, myDonations } =
+    useContext(ProfileContext);
+
+  useEffect(() => {
+    if (myDonations) {
+      getTotalDonations();
+    }
+  }, [myDonations]);
 
   if (!currentAccount) {
     return (
@@ -63,7 +57,61 @@ const Home = () => {
       <Head>
         <title>Profile</title>
       </Head>
-      <div className="flex flex-col items-center justify-start w-full min-h-screen">
+      <div className="relative flex justify-center min-h-screen md:flex-col">
+        <div className="relative flex-1 p-12 border-r flexCenter sm:px-4 md:border-r-0 md:border-b dark:border-nft-black-1 border-nft-gray-1">
+          <div className="relative w-557 minmd:w-2/3 minmd:h-2/3 sm:w-full sm:h-300 h-557 ">
+            <Image
+              alt="fundraiser-imageURL"
+              src="https://openseauserdata.com/files/d80e3b549642e88b2154664c574ea334.svg"
+              objectFit="cover"
+              className="shadow-lg rounded-xl"
+              layout="fill"
+            />
+          </div>
+        </div>
+
+        <div className="justify-start flex-1 p-12 sm:px-4 sm:pb-4">
+          <div className="flex flex-row sm:flex-col">
+            <h2 className="text-2xl font-semibold font-poppins dark:text-white text-nft-black-1 minlg:text-3xl">
+              {Number(totalDonations) < 100 ? "Basic Account" : "Advance"}
+            </h2>
+          </div>
+
+          <div className="mt-10">
+            <p className="text-xs font-normal font-poppins dark:text-white text-nft-black-1 minlg:text-base">
+              User Profile
+            </p>
+            <div className="flex flex-row items-center mt-3">
+              <div className="relative w-12 h-12 mr-2 minlg:w-20 minlg:h-20">
+                <Image
+                  alt="creator1"
+                  src={images.creator1}
+                  objectFit="cover"
+                  className="rounded-full"
+                />
+              </div>
+              <p className="text-sm font-semibold font-poppins dark:text-white text-nft-black-1 minlg:text-lg">
+                {shortenAddress(currentAccount)}
+              </p>
+            </div>
+          </div>
+
+          <h1 className="text-sm font-semibold mt-4 font-poppins dark:text-white text-nft-black-1 minlg:text-lg">
+            My total Donations: ${totalDonations} USD
+          </h1>
+
+          <div className="flex flex-col mt-10">
+            <div className="flex flex-row w-full border-b dark:border-nft-black-1 border-nft-gray-1">
+              <p className="mb-2 text-base font-medium font-poppins dark:text-white text-nft-black-1">
+                My Donations
+              </p>
+            </div>
+            <Donations />
+          </div>
+        </div>
+      </div>
+
+      {/*<div className="flex flex-col items-center justify-start w-full min-h-screen">
         <div className="flex-col w-full flexCenter">
           <Banner
             name="Your Profile"
@@ -132,7 +180,7 @@ const Home = () => {
             </Tabs>
           </Box>
         </Flex>
-      </div>
+      </div>*/}
     </>
   );
 };

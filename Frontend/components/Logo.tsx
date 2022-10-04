@@ -14,7 +14,7 @@ const Logo = () => (
           alt="logo"
         />
         <p className="ml-1 text-lg font-semibold dark:text-white text-nft-black-1 md:flex md:invisible">
-          Fundkyiv
+          FundBrave
         </p>
       </a>
     </Link>

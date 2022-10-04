@@ -1,5 +1,6 @@
 const FundraiserFactoryContract = artifacts.require("FundraiserFactory");
 const FundraiserContract = artifacts.require("Fundraiser");
+const IndividualFundraiserContract = artifacts.require("IndividualFundraiser");
 
 contract("FundraiserFactory: deployment", () => {
   it("has been deployed", async () => {
@@ -16,9 +17,16 @@ contract("FundraiserFactory: createFundraiser", (accounts) => {
     const bio = "beneficiary description";
     const beneficiary = accounts[1];
 
+    it("whitelist address", async () => {
+        fundraiserFactory = await FundraiserFactoryContract.deployed();
+        await fundraiserFactory.whitelist(accounts[0]);
+        assert.equal(await fundraiserFactory.checkWhitelisted(accounts[0]), true, "should be true")
+    })
+
     it("increments the fundraisersCount", async () => {
         fundraiserFactory = await FundraiserFactoryContract.deployed();
         const currentFundraisersCount = await fundraiserFactory.fundraisersCount();
+        await fundraiserFactory.whitelist(accounts[0]);
         await fundraiserFactory.createFundraiser(
             name,
             url,
@@ -35,8 +43,45 @@ contract("FundraiserFactory: createFundraiser", (accounts) => {
         )
     });
 
+    it("reverts if address has not been whitelisted", async () => {
+        try {
+            fundraiserFactory = await FundraiserFactoryContract.deployed();
+            await fundraiserFactory.createFundraiser(
+                name,
+                url,
+                imageURL,
+                bio,
+                beneficiary
+            );  
+        }catch(err) {
+          assert.fail("Address is not whitelisted");
+        }
+    });
+
+    it("increments the individual fundraisersCount", async () => {
+        fundraiserFactory = await FundraiserFactoryContract.deployed();
+        const currentFundraisersCount = await fundraiserFactory.individualFundraisersCount();
+        await fundraiserFactory.whitelist(accounts[0]);
+        await fundraiserFactory.createIndividualFundraiser(
+            name,
+            url,
+            imageURL,
+            bio,
+            beneficiary,
+            1000
+        );
+        const newFundraisersCount = await fundraiserFactory.individualFundraisersCount();
+
+        assert.equal(
+            newFundraisersCount - currentFundraisersCount,
+            1,
+            "should increment by 1"
+        )
+    });
+
     it("emits the FundraiserCreated event", async () => {
         fundraiserFactory = await FundraiserFactoryContract.deployed();
+        await fundraiserFactory.whitelist(accounts[0]);
         const tx = await fundraiserFactory.createFundraiser(
             name,
             url,
@@ -45,6 +90,27 @@ contract("FundraiserFactory: createFundraiser", (accounts) => {
             beneficiary
         );
         const expertedEvent = "FundraiserCreated";
+        const actualEvent = tx.logs[0].event;
+
+        assert.equal(
+            actualEvent,
+            expertedEvent,
+            "events should match"
+        );
+    });
+
+    it("emits the inividual FundraiserCreated event", async () => {
+        fundraiserFactory = await FundraiserFactoryContract.deployed();
+        await fundraiserFactory.whitelist(accounts[0]);
+        const tx = await fundraiserFactory.createIndividualFundraiser(
+            name,
+            url,
+            imageURL,
+            bio,
+            beneficiary,
+            1000
+        );
+        const expertedEvent = "IndividualFundraiserCreated";
         const actualEvent = tx.logs[0].event;
 
         assert.equal(
@@ -66,6 +132,7 @@ contract("FundraiserFactory: fundraiser", (accounts) => {
         const name = "Beneficiary";
         const lowerCaseName = name.toLowerCase();
         const beneficiary = accounts[1];
+        await factory.whitelist(accounts[0]);
 
         for (let i = 0; i < count; i++) {
             await factory.createFundraiser(
@@ -177,4 +244,5 @@ contract("FundraiserFactory: fundraiser", (accounts) => {
             }
         })
     })
+
 });

@@ -1,13 +1,20 @@
 import Web3Modal from "web3modal";
+import { useContext } from "react";
 import { ethers, providers } from "ethers";
 import cc from "cryptocompare";
 import { FundraiserFactoryAddress } from "@/config";
+import { AuthContext } from "@/context/AuthContext";
 import {
   FundraiserFactory__factory,
   Fundraiser__factory,
 } from "@/types/ethers-contracts";
 import { handleNewBeneficiary } from "@/services/notifications";
-import { FundraiserItem, MyDonations } from "@/types";
+import {
+  FundraiserItem,
+  MyDonations,
+  FundraiserDetailsItem,
+  Address,
+} from "@/types";
 
 export const fetchContract = (
   signerOrProvider: ethers.Signer | ethers.providers.Provider
@@ -57,6 +64,48 @@ export const fetchFundraisers = async (
         website,
         imageURL,
         address: item,
+      };
+    })
+  );
+
+  return items;
+};
+
+export const fetchFundraisersDetails = async (
+  limit: number,
+  offset: number,
+  currentAccount: Address
+): Promise<FundraiserDetailsItem[]> => {
+  const provider = new providers.JsonRpcProvider(
+    "https://alfajores-forno.celo-testnet.org"
+  );
+
+  const contract = fetchContract(provider);
+
+  const data = await contract.fundraisers(limit, offset);
+
+  const exchangeRate = await getExchangeRate();
+
+  const items = await Promise.all(
+    data.map(async (item) => {
+      const instance = Fundraiser__factory.connect(item, provider);
+      // TODO: Collect all data asynchronously
+      const name = await instance.name();
+      const totalDonations = await instance.totalDonations();
+      const amountInCELO = ethers.utils.formatEther(totalDonations.toString());
+      const userDonation = await instance.myDonations({
+        from: currentAccount,
+      });
+
+      const normalizedDonations = await renderDonationsList(userDonation);
+      // @ts-ignore TODO: fix typescript error
+      const dollarDonationAmount = amountInCELO * exchangeRate;
+
+      return {
+        name,
+        dollarDonationAmount,
+        address: item,
+        userDonations: normalizedDonations,
       };
     })
   );

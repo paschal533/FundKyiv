@@ -21,7 +21,6 @@ const useAuth = () => {
       if (!isMounted) {
         return;
       }
-
       setAccounts(newAccounts);
     }
 

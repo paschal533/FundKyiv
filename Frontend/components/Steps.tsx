@@ -1,5 +1,7 @@
 import { Box, Text, Grid } from "@chakra-ui/react";
 import Step from "@/components/Step";
+import { IoMdCreate } from "react-icons/io";
+import { BiDonateHeart, BiReceipt } from "react-icons/bi";
 
 export default function Steps() {
   return (
@@ -34,16 +36,16 @@ export default function Steps() {
       >
         <Step
           title="Make a Donation"
-          step="1"
+          step={<BiDonateHeart />}
           description={`
-              Donate to a fundraiser by simply clicking on "view more" button
+              Donate to a fundraiser by simply clicking on "Donate" button
               below the fundraiser card. which will take you to the fundraiser
               page for you to make your donations, and print the receipts.
           `}
         />
         <Step
           title="Create a Fundraiser"
-          step="2"
+          step={<IoMdCreate />}
           description={`
               You can create a fundraiser by clicking on the "Create" button at
               the Navbar, that will take you to the 'Create new fundraiser' page
@@ -52,12 +54,11 @@ export default function Steps() {
           `}
         />
         <Step
-          title="Send CELO"
-          step="3"
+          title="Print receipt"
+          step={<BiReceipt />}
           description={`
-              You can send CELO to anyone across the world with our DApp by
-              clicking on the "Profile" at the navBar. there, you can send CELO,
-              view your balance and your transaction counts.
+            You can print the receipt of any of your donations by going to the fundraiser page or your 
+            profile page and click on the "request receipt" button.
         `}
         />
       </Grid>
