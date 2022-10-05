@@ -188,6 +188,20 @@ contract("Fundraiser", accounts => {
     });
   });
 
+
+  describe("withdrawing less funds", () => {
+    it("throws an error when owner trys to withdraw less funds", async () => {
+      try {
+        await fundraiser.withdraw({from: owner});
+        assert.fail("Funds have to be more than 100")
+      } catch(err) {
+        const expectedError = "Funds have to be more than 100"
+        const actualError = err.reason;
+        assert.equal(actualError, expectedError, "should not be permitted")
+      }
+    });
+  })
+
   describe("fallback function", () => {
     const value = web3.utils.toWei('0.0209');
 
