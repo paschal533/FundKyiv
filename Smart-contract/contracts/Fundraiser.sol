@@ -87,6 +87,7 @@ contract Fundraiser is Ownable {
 
   // Withdraw Function
   function withdraw() public onlyOwner {
+    require(totalDonations > 100, "Funds have to be more than 100");
     uint balance = address(this).balance;
     beneficiary.transfer(balance);
 
